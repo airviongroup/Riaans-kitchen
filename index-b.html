@@ -1,0 +1,901 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Riaan's Kitchen — Indian &amp; Pakistani Cuisine, Uxbridge</title>
+<meta name="description" content="Riaan's Kitchen, 4 Eskdale Road, Uxbridge UB8 2RT. Indian &amp; Pakistani cuisine. Order on WhatsApp or call 07368 963886. Family Deal £49.95.">
+<meta name="theme-color" content="#0B0A09">
+<link rel="icon" href="assets/logo.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap" rel="stylesheet">
+<script>document.documentElement.classList.add('js');</script>
+<style>
+/* ─────────────────────────────────────────────────────────────
+   RIAAN'S KITCHEN — "easy to order from"
+   Colour system is contrast-led:
+     gold  #F5B915 on cream = 1.57:1  → NEVER text on cream. Dark plaques only.
+     chilli#EE2B55 on cream = 3.64:1  → large graphic accents only.
+     maroon#8E1F2E on cream = 7.80:1  → this is the red for text.
+     ink   #0B0A09 on cream =17.53:1  → body copy.
+   ───────────────────────────────────────────────────────────── */
+:root{
+  --gold:#F5B915;
+  --chilli:#EE2B55;
+  --leaf:#3E8E41;
+  --leaf-deep:#2F6F33;      /* white on this = 6.10:1 */
+  --ink:#0B0A09;
+  --ink-2:#17150F;
+  --ink-3:#241F17;
+  --cream:#F5F1E6;
+  --card:#FFFDF7;
+  --maroon:#8E1F2E;
+  --muted:#55504A;          /* 7.07:1 on cream */
+  --rule:rgba(11,10,9,.14);
+  --rule-soft:rgba(11,10,9,.08);
+  --h-head:60px;
+  --h-chips:46px;
+  --h-bar:78px;   /* no-JS baseline; JS below syncs it to the measured bar */
+  --sans:"Archivo",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  --serif:"Source Serif 4",Georgia,"Times New Roman",serif;
+  --wrap:1080px;
+}
+@media (min-width:721px){ :root{ --h-head:72px; --h-chips:52px; } }
+
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+html{scroll-behavior:smooth; scroll-padding-top:calc(var(--h-head) + var(--h-chips) + 10px)}
+body{
+  margin:0; background:var(--cream); color:var(--ink);
+  font-family:var(--sans); font-size:17px; line-height:1.5;
+  -webkit-font-smoothing:antialiased;
+}
+img{max-width:100%; display:block}
+a{color:var(--maroon)}
+
+/* focus — visible on both grounds */
+:where(a,button,[tabindex]):focus-visible{
+  outline:3px solid var(--maroon); outline-offset:3px; border-radius:6px;
+}
+.on-dark :where(a,button):focus-visible{ outline-color:var(--gold) }
+
+.wrap{width:min(100% - 32px, var(--wrap)); margin-inline:auto}
+@media (min-width:721px){ .wrap{width:min(100% - 56px, var(--wrap))} }
+
+.skip{
+  position:absolute; left:-9999px; top:0; z-index:200;
+  background:var(--ink); color:var(--gold); padding:12px 18px; font-weight:700;
+}
+.skip:focus{left:8px; top:8px}
+
+/* ── THE DARK PLAQUE — the motif that makes the logo's baked-in
+      dark background read as brand language, not breakage ────── */
+.plaque{ background:var(--ink); color:var(--cream) }
+
+/* ── 1. STICKY TOP BAR ───────────────────────────────────────── */
+.head{
+  position:sticky; top:0; z-index:60;
+  height:var(--h-head);
+  background:var(--ink); color:var(--cream);
+  border-bottom:1px solid rgba(245,185,21,.22);
+  transition:box-shadow .2s ease;
+}
+.head.is-stuck{ box-shadow:0 6px 22px rgba(11,10,9,.28) }
+.head-in{
+  height:100%; display:flex; align-items:center; gap:12px;
+}
+/* the logo badge: its own dark tile with a gold hairline, so the
+   photographed leaflet background becomes an intentional plaque */
+.mark{
+  display:flex; align-items:center; gap:10px;
+  background:var(--ink); border:1px solid rgba(245,185,21,.35);
+  border-radius:10px; padding:5px; margin-right:auto;
+  text-decoration:none; flex:0 0 auto;
+}
+.mark img{
+  width:auto; height:calc(var(--h-head) - 24px);
+  border-radius:6px; display:block;
+}
+.mark-txt{ display:none }
+@media (min-width:721px){
+  .mark{ padding:6px 14px 6px 6px; gap:12px }
+  .mark-txt{
+    display:block; font-weight:800; letter-spacing:-.01em;
+    font-size:18px; color:var(--cream); line-height:1.15;
+  }
+  .mark-txt small{
+    display:block; font-weight:500; font-size:11px; letter-spacing:.10em;
+    text-transform:uppercase; color:var(--gold); margin-top:2px;
+  }
+}
+.head-nav{ display:none }
+@media (min-width:960px){
+  .head-nav{ display:flex; gap:26px; margin-right:22px }
+  .head-nav a{
+    color:var(--cream); text-decoration:none; font-weight:600; font-size:15px;
+    opacity:.85; padding:6px 0; border-bottom:2px solid transparent;
+  }
+  .head-nav a:hover{ opacity:1; border-bottom-color:var(--gold) }
+}
+
+/* buttons */
+.btn{
+  display:inline-flex; align-items:center; justify-content:center; gap:9px;
+  font-family:var(--sans); font-weight:700; font-size:16px; line-height:1;
+  padding:14px 20px; border-radius:10px; border:2px solid transparent;
+  text-decoration:none; cursor:pointer; white-space:nowrap;
+  transition:transform .12s ease, background-color .15s ease, box-shadow .15s ease;
+}
+.btn svg{ width:19px; height:19px; flex:0 0 auto }
+.btn:active{ transform:translateY(1px) }
+.btn-wa{ background:var(--leaf-deep); color:#fff }      /* 6.10:1 */
+.btn-wa:hover{ background:#275c2b }
+.btn-call{ background:var(--ink); color:var(--cream) }
+.btn-call:hover{ background:var(--ink-3) }
+.btn-ghost{ background:transparent; color:var(--cream); border-color:rgba(245,241,230,.4) }
+.btn-ghost:hover{ border-color:var(--gold); color:var(--gold) }
+.btn-gold{ background:var(--gold); color:var(--ink) }   /* 11.15:1 vs ink */
+.btn-gold:hover{ background:#ffc72e }
+.btn-sm{ padding:11px 15px; font-size:15px }
+
+/* icon-only actions for the phone-width header */
+.icobtn{
+  display:inline-flex; align-items:center; justify-content:center;
+  width:44px; height:44px; border-radius:10px; flex:0 0 auto;
+  text-decoration:none; border:1px solid transparent;
+  transition:transform .12s ease, background-color .15s ease;
+}
+.icobtn svg{ width:21px; height:21px }
+.icobtn:active{ transform:translateY(1px) }
+.ico-wa{ background:var(--leaf-deep); color:#fff }
+.ico-call{ background:var(--ink-3); color:var(--gold); border-color:rgba(245,185,21,.35) }
+.head-actions-full{ display:none }
+@media (min-width:721px){
+  .head-actions-sm{ display:none }
+  .head-actions-full{ display:flex; gap:10px }
+}
+
+/* ── 2. HERO ─────────────────────────────────────────────────── */
+.hero{ padding:38px 0 30px }
+@media (min-width:721px){ .hero{ padding:60px 0 44px } }
+h1{
+  margin:0; font-size:clamp(40px,9.5vw,76px); font-weight:800;
+  letter-spacing:-.033em; line-height:.98; text-wrap:balance;
+}
+.hero-sub{
+  margin:14px 0 0; font-family:var(--serif); font-size:clamp(18px,3.4vw,23px);
+  color:var(--muted); line-height:1.35;
+}
+/* strapline sits on a dark pill because gold can't live on cream */
+.strap{
+  display:inline-block; margin:18px 0 0; background:var(--ink); color:var(--gold);
+  font-size:clamp(11px,2.7vw,13px); font-weight:700; letter-spacing:.13em;
+  text-transform:uppercase; padding:9px 16px; border-radius:999px;
+}
+.hero-cta{ display:flex; flex-wrap:wrap; gap:12px; margin-top:26px }
+.hero-cta .btn{ flex:1 1 auto; min-width:150px }
+@media (min-width:600px){ .hero-cta .btn{ flex:0 0 auto } }
+.hero-note{
+  margin:16px 0 0; font-size:15px; color:var(--muted);
+  display:flex; align-items:center; gap:8px; flex-wrap:wrap;
+}
+.hero-note svg{ width:17px; height:17px; color:var(--maroon); flex:0 0 auto }
+
+/* hero photo strip — supports, doesn't dominate */
+.strip{
+  display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-top:30px;
+}
+/* height:auto is required — the width/height attributes act as a specified
+   height, which would otherwise cancel aspect-ratio */
+.strip img{
+  width:100%; height:auto; aspect-ratio:1/1; object-fit:cover; border-radius:12px;
+  border:1px solid var(--rule-soft);
+}
+@media (min-width:721px){
+  .strip{ gap:16px }
+  .strip img{ aspect-ratio:4/3; border-radius:14px }
+}
+
+/* ── 3. FAMILY DEAL ──────────────────────────────────────────── */
+.deal-sec{ padding:12px 0 44px }
+@media (min-width:721px){ .deal-sec{ padding:22px 0 64px } }
+.deal{
+  background:var(--ink); color:var(--cream); border-radius:18px;
+  padding:26px 22px; position:relative; overflow:hidden;
+  border:1px solid rgba(245,185,21,.25);
+}
+@media (min-width:721px){ .deal{ padding:40px; border-radius:22px } }
+.deal::after{ /* chilli accent — graphic only, never text */
+  content:""; position:absolute; inset:0 auto 0 0; width:6px;
+  background:linear-gradient(180deg,var(--gold),var(--chilli));
+}
+.deal-tag{
+  font-size:12px; font-weight:700; letter-spacing:.16em; text-transform:uppercase;
+  color:var(--gold); margin:0 0 8px;
+}
+.deal h2{
+  margin:0; font-size:clamp(30px,7vw,50px); font-weight:800;
+  letter-spacing:-.03em; line-height:1; text-wrap:balance;
+}
+.deal-price{
+  font-size:clamp(46px,13vw,86px); font-weight:800; color:var(--gold);
+  letter-spacing:-.04em; line-height:1; margin:16px 0 0;
+  font-variant-numeric:tabular-nums;
+}
+.deal-grid{
+  display:grid; gap:22px; margin-top:26px;
+  padding-top:24px; border-top:1px solid rgba(245,241,230,.18);
+}
+@media (min-width:620px){ .deal-grid{ grid-template-columns:1fr 1fr; gap:34px } }
+.deal-grid h3{
+  margin:0 0 12px; font-size:12px; font-weight:700; letter-spacing:.14em;
+  text-transform:uppercase; color:var(--gold);
+}
+.deal-grid h3.free{ color:var(--chilli) }   /* 4.82:1 on ink */
+.deal-list{ list-style:none; margin:0; padding:0; display:grid; gap:9px }
+.deal-list li{
+  display:flex; align-items:baseline; gap:11px; font-size:18px; font-weight:600;
+}
+.deal-list li::before{
+  content:""; width:7px; height:7px; border-radius:50%; flex:0 0 auto;
+  background:var(--gold); transform:translateY(-2px);
+}
+.deal-list.free li::before{ background:var(--chilli) }
+.deal .btn{ margin-top:28px }
+
+/* ── 4. MENU ─────────────────────────────────────────────────── */
+.menu-sec{ padding:0 0 40px }
+.sec-head{ padding:8px 0 20px }
+.sec-head h2{
+  margin:0; font-size:clamp(28px,6vw,44px); font-weight:800; letter-spacing:-.03em;
+  line-height:1.02;
+}
+.sec-head p{ margin:10px 0 0; color:var(--muted); font-family:var(--serif); font-size:17px }
+
+/* sticky section chips — jump straight to what you want */
+.chips-outer{
+  position:sticky; top:var(--h-head); z-index:50;
+  background:var(--cream); border-bottom:1px solid var(--rule);
+  margin-bottom:26px;
+}
+.chips{
+  display:flex; gap:8px; overflow-x:auto; overflow-y:hidden;
+  height:var(--h-chips); align-items:center;
+  scrollbar-width:none; -ms-overflow-style:none;
+  scroll-snap-type:x proximity;
+}
+.chips::-webkit-scrollbar{ display:none }
+.chips a{
+  flex:0 0 auto; scroll-snap-align:start;
+  font-size:14px; font-weight:700; text-decoration:none; white-space:nowrap;
+  padding:8px 14px; border-radius:999px; color:var(--ink);
+  background:rgba(11,10,9,.05); border:1px solid transparent;
+  transition:background-color .15s ease, color .15s ease;
+}
+.chips a:hover{ background:rgba(11,10,9,.1) }
+.chips a[aria-current="true"]{ background:var(--ink); color:var(--gold) }
+
+.group{ margin:0 0 40px; scroll-margin-top:calc(var(--h-head) + var(--h-chips) + 12px) }
+.group-h{
+  display:flex; align-items:center; gap:14px; margin:0 0 4px;
+}
+.group-h h3{
+  margin:0; font-size:clamp(20px,4.4vw,27px); font-weight:800; letter-spacing:-.02em;
+  white-space:nowrap;
+}
+.group-h .bar{ flex:1; height:3px; background:var(--chilli); border-radius:2px; opacity:.85 }
+
+/* menu list — reserved 64px photo column keeps every name on one left edge */
+.items{ list-style:none; margin:18px 0 0; padding:0 }
+.item{
+  display:grid; grid-template-columns:64px 1fr; gap:0 16px;
+  padding:14px 0; border-bottom:1px solid var(--rule-soft);
+}
+.item:last-child{ border-bottom:0 }
+.item-thumb{
+  grid-row:1 / span 2; width:64px; height:64px; border-radius:10px;
+  object-fit:cover; border:1px solid var(--rule-soft); background:rgba(11,10,9,.03);
+}
+.item-void{ grid-row:1 / span 2 }   /* keeps alignment when no photo exists */
+.item-line{ display:flex; align-items:baseline; gap:10px }
+.item-name{ font-size:17px; font-weight:700; letter-spacing:-.01em }
+.item-dots{
+  flex:1 1 auto; min-width:14px;
+  border-bottom:2px dotted var(--rule); transform:translateY(-5px);
+}
+.item-price{
+  font-size:17px; font-weight:800; white-space:nowrap;
+  font-variant-numeric:tabular-nums; letter-spacing:-.01em;
+}
+.item-desc{
+  margin:5px 0 0; font-family:var(--serif); font-size:15px; line-height:1.42;
+  color:var(--muted); text-wrap:pretty;
+}
+@media (min-width:721px){
+  .item{ grid-template-columns:84px 1fr; gap:0 20px; padding:16px 0 }
+  .item-thumb{ width:84px; height:84px; border-radius:12px }
+  .item-name,.item-price{ font-size:19px }
+  .item-desc{ font-size:16px }
+}
+
+/* rice & bread — only one of four has a photo, so it gets its own shape */
+.sides{ display:grid; gap:24px; align-items:start }
+@media (min-width:620px){ .sides{ grid-template-columns:260px 1fr; gap:32px } }
+.sides-photo{ margin:0 }
+.sides-photo img{
+  width:100%; height:auto; aspect-ratio:4/3; object-fit:cover; border-radius:14px;
+  border:1px solid var(--rule-soft);
+}
+.sides-photo figcaption{
+  margin-top:9px; font-size:14px; color:var(--muted); font-family:var(--serif);
+}
+@media (min-width:620px){ .sides-photo img{ aspect-ratio:1/1 } }
+
+/* ── 5. FIND US ──────────────────────────────────────────────── */
+.find{ padding:44px 0; border-top:1px solid var(--rule) }
+@media (min-width:721px){ .find{ padding:64px 0 } }
+.find-grid{ display:grid; gap:30px }
+@media (min-width:760px){ .find-grid{ grid-template-columns:1.35fr 1fr; gap:48px } }
+.find h2{
+  margin:0 0 6px; font-size:clamp(28px,6vw,44px); font-weight:800; letter-spacing:-.03em;
+}
+.dl{ margin:22px 0 0; display:grid; gap:18px }
+.dl-row{ display:flex; gap:14px; align-items:flex-start }
+.dl-ico{
+  flex:0 0 auto; width:38px; height:38px; border-radius:10px;
+  background:var(--ink); color:var(--gold);
+  display:flex; align-items:center; justify-content:center;
+}
+.dl-ico svg{ width:19px; height:19px }
+.dl dt{
+  font-size:11px; font-weight:700; letter-spacing:.13em; text-transform:uppercase;
+  color:var(--muted); margin:0 0 3px;
+}
+.dl dd{ margin:0; font-size:18px; font-weight:600; line-height:1.35 }
+.dl dd a{ color:var(--maroon); text-decoration:none; border-bottom:2px solid rgba(142,31,46,.3) }
+.dl dd a:hover{ border-bottom-color:var(--maroon) }
+.dl dd .plain{ color:var(--ink) }
+.maplink{
+  display:inline-flex; align-items:center; gap:7px; margin-top:7px;
+  font-size:15px; font-weight:700; color:var(--maroon); text-decoration:none;
+  border-bottom:2px solid rgba(142,31,46,.3);
+}
+.maplink:hover{ border-bottom-color:var(--maroon) }
+.hours-note{
+  margin:26px 0 0; padding:14px 16px; border-radius:12px;
+  background:rgba(142,31,46,.07); border:1px solid rgba(142,31,46,.18);
+  font-size:16px; font-weight:600; color:var(--maroon);
+}
+/* QR sits on a dark plaque too — same family as the logo badge */
+.qr{
+  background:var(--ink); border-radius:16px; padding:20px; text-align:center;
+  border:1px solid rgba(245,185,21,.25);
+}
+.qr img{
+  width:100%; height:auto; max-width:190px; margin:0 auto; border-radius:10px;
+  background:#fff;
+}
+.qr-h{
+  margin:0 0 14px; font-size:12px; font-weight:700; letter-spacing:.14em;
+  text-transform:uppercase; color:var(--gold);
+}
+.qr-handle{
+  display:inline-flex; align-items:center; gap:8px; margin-top:14px;
+  color:var(--cream); text-decoration:none; font-weight:700; font-size:17px;
+}
+.qr-handle svg{ width:19px; height:19px; color:var(--gold) }
+.qr-handle:hover{ color:var(--gold) }
+
+/* ── 6. FOOTER ───────────────────────────────────────────────── */
+.foot{ background:var(--ink); color:var(--cream); padding:44px 0 40px }
+.foot-top{ display:grid; gap:26px; align-items:start }
+@media (min-width:760px){ .foot-top{ grid-template-columns:auto 1fr auto; gap:36px } }
+.foot .mark{ margin-right:0 }
+.foot-line{ font-family:var(--serif); font-size:17px; color:rgba(245,241,230,.82); margin:0 }
+.foot-line a{ color:var(--gold); text-decoration:none; border-bottom:1px solid rgba(245,185,21,.4) }
+.foot-actions{ display:flex; gap:10px; flex-wrap:wrap }
+.foot-rule{ height:1px; background:rgba(245,241,230,.16); margin:30px 0 20px }
+.foot-fine{
+  display:flex; flex-wrap:wrap; gap:8px 22px; justify-content:space-between;
+  font-size:13.5px; color:rgba(245,241,230,.62); line-height:1.5;
+}
+.foot-fine p{ margin:0 }
+
+/* ── 7. MOBILE ORDER BAR ─────────────────────────────────────── */
+.orderbar{
+  position:fixed; left:0; right:0; bottom:0; z-index:70;
+  display:none; gap:10px; padding:10px 14px;
+  padding-bottom:calc(10px + env(safe-area-inset-bottom));
+  background:rgba(11,10,9,.97); border-top:1px solid rgba(245,185,21,.3);
+  backdrop-filter:saturate(160%) blur(8px);
+}
+.orderbar .btn{ flex:1 1 0; min-width:0; padding:15px 10px }
+@media (max-width:720px){
+  .orderbar{ display:flex }
+  body{ padding-bottom:calc(var(--h-bar) + env(safe-area-inset-bottom)) }
+}
+
+/* ── MOTION — minimal, functional, opt-out honoured ──────────── */
+.js .reveal{ opacity:0; transform:translateY(14px); transition:opacity .5s ease, transform .5s ease }
+.js .reveal.is-in{ opacity:1; transform:none }
+@media (prefers-reduced-motion:reduce){
+  html{ scroll-behavior:auto }
+  *,*::before,*::after{
+    animation-duration:.001ms !important; animation-iteration-count:1 !important;
+    transition-duration:.001ms !important; scroll-behavior:auto !important;
+  }
+  .js .reveal{ opacity:1 !important; transform:none !important }
+  .btn:active{ transform:none }
+}
+</style>
+</head>
+<body>
+
+<a class="skip" href="#menu">Skip to the menu</a>
+
+<!-- ── 1. STICKY TOP BAR ─────────────────────────────────────── -->
+<header class="head on-dark" id="head">
+  <div class="wrap head-in">
+    <a class="mark" href="#top" aria-label="Riaan's Kitchen — back to top">
+      <img src="assets/logo.jpg" alt="Riaan's Kitchen" width="1000" height="936">
+      <span class="mark-txt">Riaan's Kitchen<small>Indian &amp; Pakistani</small></span>
+    </a>
+
+    <nav class="head-nav" aria-label="Sections">
+      <a href="#deal">Family Deal</a>
+      <a href="#menu">Menu</a>
+      <a href="#find">Find us</a>
+    </nav>
+
+    <div class="head-actions-sm" style="display:flex; gap:8px">
+      <a class="icobtn ico-call" href="tel:07368963886" aria-label="Call Riaan's Kitchen on 07368 963886">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
+      </a>
+      <a class="icobtn ico-wa" href="https://wa.me/447368963886?text=Hi%20Riaan%27s%20Kitchen%2C%20I%27d%20like%20to%20order" aria-label="Order from Riaan's Kitchen on WhatsApp">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347M12.05 21.785h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413"/></svg>
+      </a>
+    </div>
+
+    <div class="head-actions-full">
+      <a class="btn btn-ghost btn-sm" href="tel:07368963886">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
+        07368 963886
+      </a>
+      <a class="btn btn-wa btn-sm" href="https://wa.me/447368963886?text=Hi%20Riaan%27s%20Kitchen%2C%20I%27d%20like%20to%20order">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347M12.05 21.785h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413"/></svg>
+        Order on WhatsApp
+      </a>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- ── 2. HERO ─────────────────────────────────────────────── -->
+  <section class="hero">
+    <div class="wrap">
+      <h1>Riaan's Kitchen</h1>
+      <p class="hero-sub">Indian &amp; Pakistani Cuisine in Uxbridge.</p>
+      <p class="strap">Authentic · Fresh · Flavoursome</p>
+
+      <div class="hero-cta">
+        <a class="btn btn-wa" href="https://wa.me/447368963886?text=Hi%20Riaan%27s%20Kitchen%2C%20I%27d%20like%20to%20order">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347M12.05 21.785h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413"/></svg>
+          Order on WhatsApp
+        </a>
+        <a class="btn btn-call" href="tel:07368963886">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
+          Call 07368 963886
+        </a>
+      </div>
+
+      <p class="hero-note">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+        4 Eskdale Road, Uxbridge UB8 2RT
+      </p>
+
+      <div class="strip reveal">
+        <img src="img/lamb-karahi-2.jpg" alt="Lamb karahi in a cast-iron karahi" width="1600" height="1200">
+        <img src="img/tarka-daal-2.jpg" alt="Tarka daal in a cast-iron karahi" width="1600" height="1200">
+        <img src="img/bhindi-masala-2.jpg" alt="Bhindi masala in a cast-iron karahi" width="1600" height="1200">
+      </div>
+    </div>
+  </section>
+
+  <!-- ── 3. THE FAMILY DEAL ──────────────────────────────────── -->
+  <section class="deal-sec" id="deal" aria-labelledby="deal-h">
+    <div class="wrap">
+      <div class="deal on-dark reveal">
+        <p class="deal-tag">The flyer offer</p>
+        <h2 id="deal-h">The Family Deal</h2>
+        <p class="deal-price">£49.95</p>
+
+        <div class="deal-grid">
+          <div>
+            <h3>Includes</h3>
+            <ul class="deal-list">
+              <li>2 Curries</li>
+              <li>2 Rice</li>
+              <li>2 Plain naans</li>
+              <li>2 Starters</li>
+            </ul>
+          </div>
+          <div>
+            <h3 class="free">Plus free</h3>
+            <ul class="deal-list free">
+              <li>FREE Fresh Salad</li>
+              <li>FREE 1 × 1.5L Soft Drink</li>
+            </ul>
+          </div>
+        </div>
+
+        <a class="btn btn-gold" href="https://wa.me/447368963886?text=Hi%20Riaan%27s%20Kitchen%2C%20I%27d%20like%20to%20order%20the%20Family%20Deal%20%28%C2%A349.95%29">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347M12.05 21.785h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413"/></svg>
+          Order the Family Deal
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── 4. MENU ─────────────────────────────────────────────── -->
+  <section class="menu-sec" id="menu" aria-labelledby="menu-h">
+    <div class="wrap sec-head">
+      <h2 id="menu-h">The menu</h2>
+      <p>Tap a section to jump straight to it.</p>
+    </div>
+
+    <div class="chips-outer">
+      <div class="wrap">
+        <nav class="chips" id="chips" aria-label="Menu sections">
+          <a href="#starters">Chaat &amp; starters</a>
+          <a href="#karahi">From the karahi</a>
+          <a href="#slow">Slow cooked</a>
+          <a href="#veg">Vegetarian</a>
+          <a href="#sides">Rice &amp; bread</a>
+        </nav>
+      </div>
+    </div>
+
+    <div class="wrap">
+
+      <!-- Chaat & starters -->
+      <div class="group" id="starters">
+        <div class="group-h"><h3>Chaat &amp; starters</h3><span class="bar"></span></div>
+        <ul class="items">
+          <li class="item">
+            <img class="item-thumb" src="img/papri-chaat.jpg" alt="Papri chaat" width="1536" height="2048" loading="lazy">
+            <div class="item-line"><span class="item-name">Papri Chaat</span><span class="item-dots"></span><span class="item-price">£6.50</span></div>
+            <p class="item-desc">Crushed papri, chickpeas, mint yoghurt, tamarind, pomegranate</p>
+          </li>
+          <li class="item">
+            <img class="item-thumb" src="img/chana-chaat.jpg" alt="Chana chaat" width="1600" height="1200" loading="lazy">
+            <div class="item-line"><span class="item-name">Chana Chaat</span><span class="item-dots"></span><span class="item-price">£6.00</span></div>
+            <p class="item-desc">Spiced chickpeas, red onion, tomato, coriander, yoghurt</p>
+          </li>
+          <li class="item">
+            <img class="item-thumb" src="img/tandoori-chicken.jpg" alt="Tandoori chicken" width="1600" height="1200" loading="lazy">
+            <div class="item-line"><span class="item-name">Tandoori Chicken</span><span class="item-dots"></span><span class="item-price">£9.50</span></div>
+            <p class="item-desc">Overnight yoghurt marinade, charred, lemon and onion</p>
+          </li>
+        </ul>
+      </div>
+
+      <!-- From the karahi -->
+      <div class="group" id="karahi">
+        <div class="group-h"><h3>From the karahi</h3><span class="bar"></span></div>
+        <ul class="items">
+          <li class="item">
+            <span class="item-void" aria-hidden="true"></span>
+            <div class="item-line"><span class="item-name">Chicken Karahi</span><span class="item-dots"></span><span class="item-price">£13.50</span></div>
+            <p class="item-desc">Bone-in chicken, tomato, ginger, green chilli, crushed coriander seed</p>
+          </li>
+          <li class="item">
+            <img class="item-thumb" src="img/lamb-karahi.jpg" alt="Lamb karahi" width="1600" height="1200" loading="lazy">
+            <div class="item-line"><span class="item-name">Lamb Karahi</span><span class="item-dots"></span><span class="item-price">£15.50</span></div>
+            <p class="item-desc">Slow-cooked on the bone, dried red chilli, ginger julienne</p>
+          </li>
+          <li class="item">
+            <img class="item-thumb" src="img/chicken-jalfrezi.jpg" alt="Chicken jalfrezi" width="1600" height="1200" loading="lazy">
+            <div class="item-line"><span class="item-name">Chicken Jalfrezi</span><span class="item-dots"></span><span class="item-price">£13.00</span></div>
+            <p class="item-desc">Peppers, onion, cumin, finished with fresh salad</p>
+          </li>
+          <li class="item">
+            <img class="item-thumb" src="img/achari-gosht.jpg" alt="Achari gosht" width="1600" height="1200" loading="lazy">
+            <div class="item-line"><span class="item-name">Achari Gosht</span><span class="item-dots"></span><span class="item-price">£15.00</span></div>
+            <p class="item-desc">Lamb, pickling spice, tomato wedges, green chilli</p>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Slow cooked -->
+      <div class="group" id="slow">
+        <div class="group-h"><h3>Slow cooked</h3><span class="bar"></span></div>
+        <ul class="items">
+          <li class="item">
+            <img class="item-thumb" src="img/lamb-shank-nihari.jpg" alt="Lamb shank nihari" width="1600" height="1200" loading="lazy">
+            <div class="item-line"><span class="item-name">Lamb Shank Nihari</span><span class="item-dots"></span><span class="item-price">£17.50</span></div>
+            <p class="item-desc">Eight hours on the bone, marrow, lime, ginger</p>
+          </li>
+          <li class="item">
+            <img class="item-thumb" src="img/haleem.jpg" alt="Haleem" width="1536" height="2048" loading="lazy">
+            <div class="item-line"><span class="item-name">Haleem</span><span class="item-dots"></span><span class="item-price">£11.50</span></div>
+            <p class="item-desc">Wheat, lentils and beef cooked down for a day, full condiment set</p>
+          </li>
+          <li class="item">
+            <img class="item-thumb" src="img/gosht-palak.jpg" alt="Gosht palak" width="1600" height="1200" loading="lazy">
+            <div class="item-line"><span class="item-name">Gosht Palak</span><span class="item-dots"></span><span class="item-price">£15.00</span></div>
+            <p class="item-desc">Lamb and spinach, garlic, ginger, cream</p>
+          </li>
+          <li class="item">
+            <img class="item-thumb" src="img/kofta-curry.jpg" alt="Kofta curry" width="1600" height="1200" loading="lazy">
+            <div class="item-line"><span class="item-name">Kofta Curry</span><span class="item-dots"></span><span class="item-price">£13.50</span></div>
+            <p class="item-desc">Hand-rolled lamb koftas, cream, crisp onion</p>
+          </li>
+          <li class="item">
+            <img class="item-thumb" src="img/anda-chana.jpg" alt="Anda chana" width="1536" height="2048" loading="lazy">
+            <div class="item-line"><span class="item-name">Anda Chana</span><span class="item-dots"></span><span class="item-price">£9.00</span></div>
+            <p class="item-desc">Chickpeas, boiled egg, chaat masala, crisp onion</p>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Vegetarian -->
+      <div class="group" id="veg">
+        <div class="group-h"><h3>Vegetarian</h3><span class="bar"></span></div>
+        <ul class="items">
+          <li class="item">
+            <img class="item-thumb" src="img/paneer-makhani.jpg" alt="Paneer makhani" width="1536" height="2048" loading="lazy">
+            <div class="item-line"><span class="item-name">Paneer Makhani</span><span class="item-dots"></span><span class="item-price">£11.50</span></div>
+            <p class="item-desc">Tomato and butter gravy, cream, fenugreek</p>
+          </li>
+          <li class="item">
+            <img class="item-thumb" src="img/palak-paneer.jpg" alt="Palak paneer" width="1600" height="1200" loading="lazy">
+            <div class="item-line"><span class="item-name">Palak Paneer</span><span class="item-dots"></span><span class="item-price">£11.50</span></div>
+            <p class="item-desc">Spinach, garlic, seared paneer</p>
+          </li>
+          <li class="item">
+            <img class="item-thumb" src="img/bhindi-masala.jpg" alt="Bhindi masala" width="1600" height="1200" loading="lazy">
+            <div class="item-line"><span class="item-name">Bhindi Masala</span><span class="item-dots"></span><span class="item-price">£10.00</span></div>
+            <p class="item-desc">Okra, onion, tomato, dry-fried</p>
+          </li>
+          <li class="item">
+            <img class="item-thumb" src="img/sabzi-masala.jpg" alt="Sabzi masala" width="1600" height="1200" loading="lazy">
+            <div class="item-line"><span class="item-name">Sabzi Masala</span><span class="item-dots"></span><span class="item-price">£10.00</span></div>
+            <p class="item-desc">Mixed vegetables, ginger, cumin</p>
+          </li>
+          <li class="item">
+            <img class="item-thumb" src="img/tarka-daal.jpg" alt="Tarka daal" width="1600" height="1200" loading="lazy">
+            <div class="item-line"><span class="item-name">Tarka Daal</span><span class="item-dots"></span><span class="item-price">£8.50</span></div>
+            <p class="item-desc">Chana daal, burnt garlic tempering, green chilli</p>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Rice & bread -->
+      <div class="group" id="sides">
+        <div class="group-h"><h3>Rice &amp; bread</h3><span class="bar"></span></div>
+        <div class="sides">
+          <figure class="sides-photo">
+            <img src="img/pilau-rice.jpg" alt="Pilau rice" width="1600" height="1200" loading="lazy">
+            <figcaption>Pilau rice</figcaption>
+          </figure>
+          <ul class="items" style="margin-top:0">
+            <li class="item" style="grid-template-columns:1fr">
+              <div class="item-line"><span class="item-name">Pilau Rice</span><span class="item-dots"></span><span class="item-price">£4.00</span></div>
+            </li>
+            <li class="item" style="grid-template-columns:1fr">
+              <div class="item-line"><span class="item-name">Plain Naan</span><span class="item-dots"></span><span class="item-price">£3.00</span></div>
+            </li>
+            <li class="item" style="grid-template-columns:1fr">
+              <div class="item-line"><span class="item-name">Garlic Naan</span><span class="item-dots"></span><span class="item-price">£3.50</span></div>
+            </li>
+            <li class="item" style="grid-template-columns:1fr">
+              <div class="item-line"><span class="item-name">Roti</span><span class="item-dots"></span><span class="item-price">£2.50</span></div>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ── 5. FIND US ──────────────────────────────────────────── -->
+  <section class="find" id="find" aria-labelledby="find-h">
+    <div class="wrap find-grid">
+      <div>
+        <h2 id="find-h">Find us</h2>
+
+        <dl class="dl">
+          <div class="dl-row">
+            <span class="dl-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg></span>
+            <div>
+              <dt>Address</dt>
+              <dd><span class="plain">4 Eskdale Road, Uxbridge UB8 2RT</span><br>
+                <a class="maplink" href="https://www.google.com/maps/search/?api=1&amp;query=4%20Eskdale%20Road%2C%20Uxbridge%20UB8%202RT" target="_blank" rel="noopener">
+                  Open in Maps
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="width:14px;height:14px" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg>
+                </a>
+              </dd>
+            </div>
+          </div>
+
+          <div class="dl-row">
+            <span class="dl-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg></span>
+            <div>
+              <dt>Phone &amp; WhatsApp</dt>
+              <dd><a href="tel:07368963886">07368 963886</a></dd>
+            </div>
+          </div>
+
+          <div class="dl-row">
+            <span class="dl-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3.5 7 8.5 6 8.5-6"/></svg></span>
+            <div>
+              <dt>Email</dt>
+              <dd><a href="mailto:info@riaankitchen.com">info@riaankitchen.com</a></dd>
+            </div>
+          </div>
+
+          <div class="dl-row">
+            <span class="dl-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="5" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="3.8" stroke="currentColor" stroke-width="2"/><circle cx="17.2" cy="6.8" r="1.2" fill="currentColor"/></svg></span>
+            <div>
+              <dt>Instagram</dt>
+              <dd><a href="https://instagram.com/riaanskitchen" target="_blank" rel="noopener">@riaanskitchen</a></dd>
+            </div>
+          </div>
+        </dl>
+
+        <p class="hours-note">Call or message to check today's hours.</p>
+      </div>
+
+      <div class="qr on-dark">
+        <p class="qr-h">Follow on Instagram</p>
+        <img src="img/instagram-qr.jpg" alt="QR code linking to Riaan's Kitchen on Instagram" width="696" height="800" loading="lazy">
+        <a class="qr-handle" href="https://instagram.com/riaanskitchen" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="3.8" stroke="currentColor" stroke-width="2"/><circle cx="17.2" cy="6.8" r="1.2" fill="currentColor"/></svg>
+          @riaanskitchen
+        </a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ── 6. FOOTER ─────────────────────────────────────────────── -->
+<footer class="foot on-dark">
+  <div class="wrap">
+    <div class="foot-top">
+      <a class="mark" href="#top" aria-label="Riaan's Kitchen — back to top">
+        <img src="assets/logo.jpg" alt="Riaan's Kitchen" width="1000" height="936" loading="lazy">
+        <span class="mark-txt">Riaan's Kitchen<small>Indian &amp; Pakistani</small></span>
+      </a>
+
+      <p class="foot-line">
+        4 Eskdale Road, Uxbridge UB8 2RT<br>
+        <a href="tel:07368963886">07368 963886</a> ·
+        <a href="mailto:info@riaankitchen.com">info@riaankitchen.com</a>
+      </p>
+
+      <div class="foot-actions">
+        <a class="btn btn-wa btn-sm" href="https://wa.me/447368963886?text=Hi%20Riaan%27s%20Kitchen%2C%20I%27d%20like%20to%20order">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347M12.05 21.785h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413"/></svg>
+          WhatsApp
+        </a>
+        <a class="btn btn-ghost btn-sm" href="tel:07368963886">Call</a>
+      </div>
+    </div>
+
+    <div class="foot-rule"></div>
+
+    <div class="foot-fine">
+      <p>© <span id="yr">2026</span> Riaan's Kitchen · Indian &amp; Pakistani Cuisine</p>
+      <p>Menu prices are indicative and subject to confirmation.</p>
+    </div>
+  </div>
+</footer>
+
+<!-- ── 7. MOBILE ORDER BAR ───────────────────────────────────── -->
+<nav class="orderbar on-dark" aria-label="Order now">
+  <a class="btn btn-wa" href="https://wa.me/447368963886?text=Hi%20Riaan%27s%20Kitchen%2C%20I%27d%20like%20to%20order">
+    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347M12.05 21.785h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413"/></svg>
+    WhatsApp
+  </a>
+  <a class="btn btn-gold" href="tel:07368963886">
+    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
+    Call
+  </a>
+</nav>
+
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"Restaurant",
+  "name":"Riaan's Kitchen",
+  "servesCuisine":["Indian","Pakistani"],
+  "telephone":"+44 7368 963886",
+  "email":"info@riaankitchen.com",
+  "address":{
+    "@type":"PostalAddress",
+    "streetAddress":"4 Eskdale Road",
+    "addressLocality":"Uxbridge",
+    "postalCode":"UB8 2RT",
+    "addressCountry":"GB"
+  },
+  "sameAs":["https://instagram.com/riaanskitchen"]
+}
+</script>
+
+<script>
+(function(){
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // current year — avoids a hard-coded date going stale
+  var yr = document.getElementById('yr');
+  if (yr) yr.textContent = new Date().getFullYear();
+
+  // keep the fixed order bar from ever covering the end of the page:
+  // reserve exactly its measured height (which already includes safe-area inset)
+  var bar = document.querySelector('.orderbar');
+  function syncBar(){
+    if (getComputedStyle(bar).display === 'none'){ document.body.style.paddingBottom = ''; return; }
+    document.body.style.paddingBottom = bar.offsetHeight + 'px';
+  }
+  syncBar();
+  window.addEventListener('resize', syncBar, {passive:true});
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(syncBar);
+
+  // header gains a shadow once you've scrolled past the hero top
+  var head = document.getElementById('head');
+  var onScroll = function(){
+    if (window.scrollY > 8) head.classList.add('is-stuck');
+    else head.classList.remove('is-stuck');
+  };
+  onScroll();
+  window.addEventListener('scroll', onScroll, {passive:true});
+
+  // reveal on entry (functional: keeps long menu from arriving all at once)
+  var reveals = document.querySelectorAll('.reveal');
+  if (reduce || !('IntersectionObserver' in window)) {
+    reveals.forEach(function(el){ el.classList.add('is-in'); });
+  } else {
+    var ro = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if (e.isIntersecting){ e.target.classList.add('is-in'); ro.unobserve(e.target); }
+      });
+    }, {rootMargin:'0px 0px -8% 0px', threshold:0.05});
+    reveals.forEach(function(el){ ro.observe(el); });
+  }
+
+  // scroll-spy: highlight the section chip you're currently reading
+  var groups = Array.prototype.slice.call(document.querySelectorAll('.group'));
+  var chipWrap = document.getElementById('chips');
+  var chips = Array.prototype.slice.call(chipWrap.querySelectorAll('a'));
+  var byId = {};
+  chips.forEach(function(a){ byId[a.getAttribute('href').slice(1)] = a; });
+
+  function setCurrent(id){
+    chips.forEach(function(a){ a.removeAttribute('aria-current'); });
+    var a = byId[id];
+    if (!a) return;
+    a.setAttribute('aria-current','true');
+    // keep the active chip in view within its own scroller (never the page)
+    var l = a.offsetLeft, r = l + a.offsetWidth;
+    if (l < chipWrap.scrollLeft + 12) chipWrap.scrollTo({left:Math.max(0,l-12), behavior: reduce ? 'auto':'smooth'});
+    else if (r > chipWrap.scrollLeft + chipWrap.clientWidth - 12)
+      chipWrap.scrollTo({left:r - chipWrap.clientWidth + 12, behavior: reduce ? 'auto':'smooth'});
+  }
+
+  if ('IntersectionObserver' in window && groups.length){
+    var spy = new IntersectionObserver(function(entries){
+      var visible = entries.filter(function(e){ return e.isIntersecting; });
+      if (!visible.length) return;
+      visible.sort(function(a,b){ return a.boundingClientRect.top - b.boundingClientRect.top; });
+      setCurrent(visible[0].target.id);
+    }, {rootMargin:'-45% 0px -50% 0px', threshold:0});
+    groups.forEach(function(g){ spy.observe(g); });
+  }
+})();
+</script>
+
+</body>
+</html>

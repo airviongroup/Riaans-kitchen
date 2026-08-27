@@ -1,0 +1,1170 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Riaan's Kitchen — Indian &amp; Pakistani Cuisine, Uxbridge</title>
+<meta name="description" content="Riaan's Kitchen, 4 Eskdale Road, Uxbridge UB8 2RT. Indian &amp; Pakistani cuisine — authentic, fresh, flavoursome. Order on WhatsApp. Family Deal £49.95.">
+<meta name="theme-color" content="#0B0A09">
+<meta name="color-scheme" content="dark">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="Riaan's Kitchen — Indian &amp; Pakistani Cuisine">
+<meta property="og:description" content="Authentic · Fresh · Flavoursome. 4 Eskdale Road, Uxbridge UB8 2RT. Order on WhatsApp.">
+<meta property="og:image" content="img/lamb-karahi.jpg">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="icon" href="assets/logo.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Inter:wght@400;500;600;700&display=swap">
+
+<script>document.documentElement.className += " js";</script>
+
+<style>
+/* ==========================================================================
+   RIAAN'S KITCHEN — FINAL
+   Look & feel carried over from draft A (index.html): dark ink ground,
+   gold / chilli / leaf / cream, Fraunces display + Inter UI.
+   Structure changed to PAGE SELECTION — a hash router with five discrete
+   pages, each sized to sit in about one screen.
+   Photography rule: karahi shots are shown WHOLE (object-fit:contain on a
+   warm panel), never cropped into the middle of the pan.
+   ========================================================================== */
+
+:root{
+  --ink:#0B0A09;
+  --ink-2:#141110;
+  --ink-3:#1D1815;
+  --gold:#F5B915;
+  --chilli:#EE2B55;
+  --leaf:#3E8E41;
+  --cream:#F5F1E6;
+  --maroon:#8E1F2E;
+  --muted:#B9B0A2;
+  --line:rgba(245,241,230,.13);
+  --line-strong:rgba(245,241,230,.24);
+  --display:"Fraunces", Georgia, "Times New Roman", serif;
+  --ui:"Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --pad:clamp(16px, 4vw, 34px);
+  --maxw:1200px;
+  --header-h:64px;
+  --r:16px;
+}
+@media (min-width:1000px){ :root{ --header-h:74px; } }
+
+*,*::before,*::after{ box-sizing:border-box; }
+
+html{
+  -webkit-text-size-adjust:100%;
+  scrollbar-gutter:stable;           /* keeps page width constant across routes */
+}
+
+body{
+  margin:0;
+  min-height:100vh;
+  min-height:100svh;
+  display:flex; flex-direction:column;
+  background:var(--ink);
+  color:var(--cream);
+  font-family:var(--ui);
+  font-size:16px;
+  line-height:1.6;
+  overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+}
+
+/* ambient warm ground — the flyer's heat, very quiet */
+body::before{
+  content:""; position:fixed; inset:0; z-index:0; pointer-events:none;
+  background:
+    radial-gradient(58% 46% at 12% 6%, rgba(142,31,46,.30), transparent 62%),
+    radial-gradient(48% 42% at 92% 82%, rgba(245,185,21,.11), transparent 66%);
+}
+.site-header,.site-footer,main,.order-bar{ position:relative; z-index:2; }
+
+img{ max-width:100%; display:block; }
+a{ color:inherit; }
+h1,h2,h3,h4{ margin:0; font-family:var(--display); font-weight:700; line-height:1.06; letter-spacing:-.015em; }
+p{ margin:0; }
+ul{ margin:0; padding:0; list-style:none; }
+
+:where(a,button,[tabindex]):focus-visible{
+  outline:3px solid var(--gold);
+  outline-offset:3px;
+  border-radius:8px;
+}
+
+.skip{
+  position:absolute; left:-9999px; top:0; z-index:300;
+  background:var(--gold); color:#1A1206; font-weight:700;
+  padding:12px 18px; border-radius:0 0 10px 0; text-decoration:none;
+}
+.skip:focus{ left:0; }
+
+.wrap{ width:100%; max-width:var(--maxw); margin-inline:auto; padding-inline:var(--pad); }
+
+.eyebrow{
+  font-size:.7rem; font-weight:700;
+  letter-spacing:.2em; text-transform:uppercase; color:var(--gold);
+  margin:0 0 12px;
+}
+.eyebrow--chilli{ color:var(--chilli); }
+.rule{
+  height:1px; border:0; margin:0;
+  background:linear-gradient(90deg, var(--gold), rgba(238,43,85,.5) 42%, transparent 92%);
+}
+
+/* ---------- buttons ---------- */
+.btn{
+  display:inline-flex; align-items:center; justify-content:center; gap:.6em;
+  font-family:var(--ui); font-size:.94rem; font-weight:600; line-height:1;
+  padding:.9em 1.3em; border-radius:999px; border:1px solid transparent;
+  text-decoration:none; white-space:nowrap; cursor:pointer;
+  transition:transform .22s ease, background-color .22s ease, border-color .22s ease, color .22s ease, box-shadow .22s ease;
+}
+.btn svg{ width:1.15em; height:1.15em; flex:none; fill:currentColor; }
+.btn--wa{ background:var(--leaf); color:#fff; box-shadow:0 6px 20px rgba(62,142,65,.28); }
+.btn--wa:hover{ background:#47a34b; transform:translateY(-2px); box-shadow:0 10px 26px rgba(62,142,65,.4); }
+.btn--gold{ background:var(--gold); color:#1A1206; box-shadow:0 6px 20px rgba(245,185,21,.22); }
+.btn--gold:hover{ background:#ffc836; transform:translateY(-2px); box-shadow:0 10px 26px rgba(245,185,21,.34); }
+.btn--ghost{ border-color:var(--line-strong); color:var(--cream); background:rgba(245,241,230,.04); }
+.btn--ghost:hover{ border-color:var(--gold); color:var(--gold); transform:translateY(-2px); }
+/* min-height keeps every .btn--sm the same box height regardless of content —
+   without it, a button with an svg icon (WhatsApp) computes taller than a
+   text-only one (Deliveroo/Uber Eats' .pname), and align:center then sinks
+   the shorter buttons a couple px into the row instead of sitting flush. */
+.btn--sm{ font-size:.84rem; padding:.7em 1.02em; min-height:calc(2.55em + 2px); }
+
+/* ---------- delivery partners ---
+   Wordmarks are REAL TEXT, not images. The first build wired the official
+   SVGs with an onerror text fallback; the files were never going to exist,
+   the fallback did not fire, and every partner button rendered as an
+   anonymous colour swatch. Text always names the brand.
+   ----------------------------------------------
+   Real ordering links supplied by the client. The official Deliveroo and Uber
+   Eats marks are NOT in this repo — dropping `img/deliveroo.svg` and
+   `img/ubereats.svg` in (both companies publish brand kits) upgrades these
+   automatically. Until then `onerror` swaps to a wordmark set in the partner's
+   own brand colour, so the button is always complete and never a broken image.
+   Sized in em so the lockup scales with the button. */
+.btn--roo{ background:#00CCBC; color:#0B2B29; box-shadow:0 6px 20px rgba(0,204,188,.26); }
+.btn--roo:hover{ background:#19ddcd; transform:translateY(-2px); box-shadow:0 10px 26px rgba(0,204,188,.38); }
+.btn--ue{ background:#06C167; color:#08240F; box-shadow:0 6px 20px rgba(6,193,103,.26); }
+.btn--ue:hover{ background:#20d67c; transform:translateY(-2px); box-shadow:0 10px 26px rgba(6,193,103,.38); }
+.btn .pname{ font-weight:800; letter-spacing:.01em; font-size:1.02em; white-space:nowrap; }
+.btn .pand{ opacity:.72; font-weight:600; }
+
+/* ---------- curtain (covers the page swap) ---------- */
+#curtain{ position:fixed; inset:0; z-index:150; pointer-events:none; display:flex; }
+#curtain i{
+  flex:1; display:block; transform:scaleY(0); transform-origin:bottom;
+  background:linear-gradient(180deg, var(--maroon), #2A0C11);
+}
+#curtain i:nth-child(2){ background:linear-gradient(180deg,#A6253A,#2A0C11); }
+#curtain i:nth-child(3){ background:linear-gradient(180deg,var(--chilli),#2A0C11); }
+#curtain i:nth-child(4){ background:linear-gradient(180deg,#C4491F,#2A0C11); }
+#curtain i:nth-child(5){ background:linear-gradient(180deg,var(--gold),#2A0C11); }
+#curtain.close i{ transform:scaleY(1); transform-origin:bottom; transition:transform .36s cubic-bezier(.76,0,.24,1); }
+#curtain.open  i{ transform:scaleY(0); transform-origin:top;    transition:transform .36s cubic-bezier(.76,0,.24,1); }
+#curtain i:nth-child(1){ transition-delay:0s; }
+#curtain i:nth-child(2){ transition-delay:.04s; }
+#curtain i:nth-child(3){ transition-delay:.08s; }
+#curtain i:nth-child(4){ transition-delay:.12s; }
+#curtain i:nth-child(5){ transition-delay:.16s; }
+
+/* ---------- header / router nav ---------- */
+.site-header{
+  position:sticky; top:0; z-index:100;
+  background:rgba(11,10,9,.93);
+  border-bottom:1px solid var(--line);
+  backdrop-filter:saturate(140%) blur(12px);
+  -webkit-backdrop-filter:saturate(140%) blur(12px);
+}
+.bar{ min-height:var(--header-h); display:flex; align-items:center; gap:14px; }
+
+.brand{ display:flex; align-items:center; gap:10px; text-decoration:none; flex:none; }
+.brand img{
+  width:38px; height:36px; border-radius:8px; object-fit:contain;
+  background:var(--ink);              /* logo always sits on a dark panel, never cropped */
+}
+@media (min-width:1000px){ .brand img{ width:46px; height:43px; } }
+.brand-name{
+  display:none; font-family:var(--display); font-weight:700; font-size:1rem;
+  letter-spacing:-.01em; line-height:1.08;
+}
+@media (min-width:560px){ .brand-name{ display:block; } }
+
+.tabs{ position:relative; display:flex; gap:2px; margin-inline:auto; }
+.tabs a{
+  position:relative; z-index:2; padding:8px 15px; border-radius:999px;
+  text-decoration:none; font-size:.86rem; font-weight:600; letter-spacing:.01em;
+  color:var(--muted); white-space:nowrap; transition:color .3s ease;
+}
+.tabs a:hover{ color:var(--cream); }
+.tabs a.on{ color:#1A1206; }
+#pill{
+  position:absolute; z-index:1; top:0; left:0; height:100%; width:0; border-radius:999px;
+  background:var(--gold);
+  transition:transform .46s cubic-bezier(.34,1.35,.44,1), width .46s cubic-bezier(.34,1.35,.44,1);
+  will-change:transform,width;
+}
+#pill.noanim{ transition:none; }
+
+.header-cta{ flex:none; margin-left:auto; }
+
+/* route progress rail under the header */
+.rrail{ height:2px; background:rgba(245,241,230,.07); position:relative; overflow:hidden; }
+.rrail i{ position:absolute; inset:0; background:linear-gradient(90deg,var(--gold),var(--chilli)); transform:scaleX(0); transform-origin:left; }
+.rrail.go i{ animation:rr .6s cubic-bezier(.4,0,.2,1); }
+@keyframes rr{ 0%{transform:scaleX(0)} 60%{transform:scaleX(1)} 100%{transform:scaleX(1);opacity:0} }
+
+@media (max-width:999px){
+  .bar{ flex-wrap:wrap; gap:10px; padding-block:9px; }
+  .tabs{ order:3; width:100%; margin-inline:0; overflow-x:auto; padding-bottom:2px; -webkit-overflow-scrolling:touch; scrollbar-width:none; }
+  .tabs::-webkit-scrollbar{ display:none; }
+  .tabs a{ padding:7px 13px; font-size:.82rem; }
+}
+
+/* ---------- page shell ---------- */
+main{ flex:1 1 auto; display:flex; flex-direction:column; }
+.page{ display:flex; flex-direction:column; justify-content:center; flex:1 1 auto; padding-block:clamp(22px,3.2vw,42px); }
+[hidden]{ display:none !important; }
+
+.js .rise{ opacity:0; transform:translateY(18px); }
+.js .page.enter .rise{ animation:rise .6s cubic-bezier(.16,1,.3,1) forwards; animation-delay:calc(var(--i,0) * 70ms); }
+.js .page.enter.back .rise{ animation-name:riseBack; }
+@keyframes rise{ from{opacity:0;transform:translateY(18px)} to{opacity:1;transform:none} }
+@keyframes riseBack{ from{opacity:0;transform:translateY(-18px)} to{opacity:1;transform:none} }
+
+h1{ font-size:clamp(2.3rem, 5.4vw, 4rem); line-height:.95; text-wrap:balance; }
+h2{ font-size:clamp(1.6rem, 3.4vw, 2.5rem); }
+/* page titles keep h1 typography whatever tag the router gives them.
+   Only the page you are looking at is the document's single <h1>. */
+.ptitle{ font-size:clamp(2.3rem, 5.4vw, 4rem); line-height:.95; text-wrap:balance; }
+.lede{ color:var(--muted); max-width:56ch; }
+
+/* ---------- the photo panel — THIS is the fix for "too zoomed in" ----------
+   Round karahi shot from above. The pan must sit WHOLE in frame, so the image
+   is contained inside a near-4:3 warm panel and centred. Nothing is cropped. */
+.photo{
+  position:relative; border-radius:var(--r); overflow:hidden;
+  border:1px solid rgba(245,185,21,.20);
+  background:
+    radial-gradient(120% 120% at 50% 30%, #2C1B14 0%, #1A1210 52%, #120D0B 100%);
+  box-shadow:0 24px 60px rgba(0,0,0,.5);
+}
+.photo img{
+  width:100%; height:100%;
+  object-fit:contain;                 /* whole pan, never a crop of the middle */
+  object-position:center;
+}
+.photo--hero{ aspect-ratio:4/3; }
+.photo-cap{
+  position:absolute; left:12px; bottom:12px;
+  background:rgba(11,10,9,.72); backdrop-filter:blur(6px); -webkit-backdrop-filter:blur(6px);
+  border:1px solid var(--line); border-radius:999px;
+  padding:.42em .85em; font-size:.74rem; font-weight:600;
+  letter-spacing:.11em; text-transform:uppercase; color:var(--cream);
+}
+
+/* ---------- HOME ---------- */
+.home-grid{ display:grid; gap:clamp(24px,3.4vw,44px); grid-template-columns:1fr; align-items:center; }
+@media (min-width:900px){ .home-grid{ grid-template-columns:1.02fr .98fr; } }
+.home-logo{
+  width:84px; height:79px; border-radius:14px; object-fit:contain;
+  background:var(--ink); border:1px solid var(--line);
+  margin-bottom:18px;
+}
+.home-cuisine{ font-family:var(--display); font-weight:500; font-size:clamp(1.05rem,2.4vw,1.45rem); margin-top:.35em; }
+.strap{
+  font-size:clamp(.74rem,1.7vw,.86rem); font-weight:600;
+  letter-spacing:.22em; text-transform:uppercase; color:var(--gold);
+  margin-top:.85em;
+}
+.cta-row{ display:flex; flex-wrap:wrap; gap:11px; margin-top:22px; }
+
+.tiles{ display:grid; gap:12px; grid-template-columns:1fr; margin-top:clamp(22px,3vw,34px); }
+@media (min-width:640px){ .tiles{ grid-template-columns:repeat(3,1fr); } }
+.tile{
+  display:flex; align-items:center; justify-content:space-between; gap:14px;
+  padding:15px 18px; border-radius:14px; text-decoration:none;
+  background:var(--ink-2); border:1px solid var(--line);
+  transition:border-color .3s ease, transform .3s ease, background-color .3s ease;
+}
+.tile:hover{ border-color:rgba(245,185,21,.45); transform:translateY(-3px); background:var(--ink-3); }
+.tile b{ font-family:var(--display); font-size:1.06rem; font-weight:700; display:block; }
+.tile span{ color:var(--muted); font-size:.82rem; }
+.tile .arw{ color:var(--gold); font-size:1.15rem; flex:none; }
+
+/* ---------- MENU ---------- */
+.head-row{ display:flex; flex-wrap:wrap; align-items:flex-end; justify-content:space-between; gap:16px 24px; margin-bottom:clamp(18px,2.4vw,28px); }
+/* The three order buttons were direct .head-row children, so when the row
+   ran out of width, flex-wrap peeled them off ONE AT A TIME onto their own
+   lines — each stray line then got its own space-between treatment, scattering
+   a lone button to the left or spreading two apart. Grouping them here makes
+   them one flex item: they move to a new line together, still in a line. */
+.head-actions{ display:flex; flex-wrap:wrap; align-items:center; gap:11px; }
+.heat{display:inline-flex;gap:2px;margin-left:7px;vertical-align:.06em}
+.heat i{width:5px;height:9px;border-radius:60% 60% 50% 50%/70% 70% 40% 40%;background:var(--chilli);transform:rotate(-8deg)}
+.menu-cols{ display:grid; gap:clamp(20px,2.6vw,38px); grid-template-columns:1fr; }
+@media (min-width:700px){ .menu-cols{ grid-template-columns:repeat(2,1fr); } }
+@media (min-width:1020px){ .menu-cols{ grid-template-columns:repeat(3,1fr); } }
+
+.course + .course{ margin-top:24px; }
+.course h3{
+  font-family:var(--ui); font-size:.68rem; font-weight:700;
+  letter-spacing:.2em; text-transform:uppercase; color:var(--gold);
+  padding-bottom:8px; margin-bottom:6px; border-bottom:1px solid rgba(245,185,21,.28);
+}
+.row{
+  display:grid; grid-template-columns:1fr auto; gap:2px 12px;
+  padding:9px 0; border-bottom:1px solid var(--line);
+}
+.row .n{ font-family:var(--display); font-weight:700; font-size:1.02rem; line-height:1.25; }
+.row .p{ color:var(--gold); font-weight:600; font-size:.96rem; font-variant-numeric:tabular-nums; white-space:nowrap; }
+.row .d{ grid-column:1/-1; color:var(--muted); font-size:.82rem; line-height:1.45; }
+
+.menu-note{ color:var(--muted); font-size:.84rem; margin-top:16px; }
+
+/* ---------- FAMILY DEAL ---------- */
+.deal-grid{ display:grid; gap:clamp(22px,3vw,42px); grid-template-columns:1fr; align-items:center; }
+@media (min-width:900px){ .deal-grid{ grid-template-columns:1.06fr .94fr; } }
+.deal-panel{
+  border-radius:20px; padding:clamp(22px,3vw,36px);
+  border:1px solid rgba(245,185,21,.34);
+  background:radial-gradient(120% 120% at 0% 0%, #45111C 0%, #240D10 46%, #140C0A 100%);
+  box-shadow:0 26px 60px rgba(0,0,0,.5);
+}
+.deal-price{
+  font-family:var(--display); font-weight:700; color:var(--gold);
+  font-size:clamp(3rem,8vw,4.6rem); line-height:1; letter-spacing:-.03em;
+  margin:.08em 0 .2em; font-variant-numeric:tabular-nums;
+}
+.deal-lists{ display:grid; gap:18px; margin-bottom:22px; }
+@media (min-width:520px){ .deal-lists{ grid-template-columns:1fr 1fr; gap:20px; } }
+.deal-lists h3{
+  font-family:var(--ui); font-size:.68rem; font-weight:700;
+  letter-spacing:.2em; text-transform:uppercase; color:var(--muted);
+  margin-bottom:10px; padding-bottom:8px; border-bottom:1px solid rgba(245,241,230,.16);
+}
+.deal-lists li{ display:flex; align-items:flex-start; gap:9px; font-size:1rem; padding:4px 0; }
+.ticks li::before{ content:"✓"; color:var(--gold); font-weight:700; line-height:1.5; flex:none; }
+.free-chip{
+  flex:none; background:var(--chilli); color:#fff;
+  font-size:.6rem; font-weight:700; letter-spacing:.12em;
+  padding:.42em .58em; border-radius:5px; line-height:1; margin-top:.3em;
+}
+
+/* ---------- GALLERY ---------- */
+.gal{ display:grid; gap:clamp(16px,2.2vw,28px); grid-template-columns:1fr; align-items:start; }
+@media (min-width:900px){ .gal{ grid-template-columns:1.3fr .7fr; } }
+.gal-stage{ aspect-ratio:4/3; }
+.thumbs{ display:grid; gap:8px; grid-template-columns:repeat(4,1fr); }
+@media (min-width:900px){ .thumbs{ grid-template-columns:repeat(3,1fr); gap:9px; } }
+.thumb{
+  padding:0; border:1px solid var(--line); border-radius:9px; overflow:hidden;
+  background:#17110F; cursor:pointer; aspect-ratio:4/3;
+  transition:border-color .28s ease, transform .28s ease, opacity .28s ease;
+  opacity:.62;
+}
+.thumb img{ width:100%; height:100%; object-fit:contain; object-position:center; }
+.thumb:hover{ opacity:1; transform:translateY(-2px); border-color:rgba(245,185,21,.5); }
+.thumb[aria-current="true"]{ opacity:1; border-color:var(--gold); box-shadow:0 0 0 1px var(--gold) inset; }
+
+/* ---------- FIND US ---------- */
+.find-grid{ display:grid; gap:clamp(24px,3.2vw,44px); grid-template-columns:1fr; align-items:start; }
+@media (min-width:860px){ .find-grid{ grid-template-columns:1.08fr .92fr; } }
+.contact-row{
+  display:grid; grid-template-columns:1fr; gap:2px;
+  padding:11px 0; border-bottom:1px solid var(--line);
+}
+@media (min-width:520px){ .contact-row{ grid-template-columns:108px 1fr; gap:16px; align-items:baseline; } }
+.contact-label{ font-size:.66rem; font-weight:700; letter-spacing:.18em; text-transform:uppercase; color:var(--muted); }
+.contact-value{ font-size:1.02rem; font-style:normal; }
+.contact-value a{ text-decoration:none; border-bottom:1px solid rgba(245,185,21,.4); padding-bottom:2px; transition:color .2s ease, border-color .2s ease; }
+.contact-value a:hover{ color:var(--gold); border-color:var(--gold); }
+.hours-note{ margin-top:16px; color:var(--muted); font-size:.92rem; display:flex; gap:9px; align-items:flex-start; }
+.hours-note::before{ content:"·"; color:var(--gold); font-weight:700; }
+.find-actions{ display:flex; flex-wrap:wrap; gap:11px; margin-top:20px; }
+
+.find-aside{ display:flex; flex-direction:column; gap:14px; }
+.map-card{
+  border:1px solid var(--line); border-radius:14px; overflow:hidden;
+  background:var(--ink-2); display:block; text-decoration:none;
+  transition:border-color .3s ease, transform .3s ease;
+}
+.map-card:hover{ border-color:rgba(245,185,21,.45); transform:translateY(-3px); }
+.map-face{
+  position:relative; padding:22px;
+  background:
+    repeating-linear-gradient(0deg, rgba(245,241,230,.05) 0 1px, transparent 1px 32px),
+    repeating-linear-gradient(90deg, rgba(245,241,230,.05) 0 1px, transparent 1px 32px),
+    linear-gradient(135deg,#17130F,#0F0C0A);
+}
+.map-face strong{ display:block; font-family:var(--display); font-size:1.1rem; margin-bottom:4px; }
+.map-face span{ color:var(--muted); font-size:.88rem; }
+.map-face .pin{
+  position:absolute; top:18px; right:18px; width:30px; height:30px; border-radius:50%;
+  background:var(--chilli); box-shadow:0 0 0 7px rgba(238,43,85,.18);
+  display:grid; place-items:center;
+}
+.map-face .pin svg{ width:15px; height:15px; fill:#fff; }
+
+.qr-card{
+  background:var(--ink-2); border:1px solid var(--line); border-radius:14px;
+  padding:16px; display:flex; align-items:center; gap:18px;
+}
+.qr-card img{ width:100px; height:115px; object-fit:contain; flex:none; border-radius:8px; background:#fff; padding:5px; }
+.qr-card h3{ font-size:1.05rem; margin-bottom:4px; }
+.qr-card p{ color:var(--muted); font-size:.86rem; margin-bottom:8px; }
+.qr-card a{ text-decoration:none; color:var(--gold); font-weight:600; font-size:.9rem; }
+.qr-card a:hover{ text-decoration:underline; }
+
+/* ---------- footer ---------- */
+.site-footer{ border-top:1px solid var(--line); padding-block:16px 18px; margin-top:auto; }
+.foot{ display:flex; flex-wrap:wrap; align-items:center; gap:10px 22px; }
+.foot-links{ display:flex; flex-wrap:wrap; gap:8px 18px; align-items:center; }
+.foot-links a{ color:var(--muted); text-decoration:none; font-size:.84rem; font-weight:500; }
+.foot-links a:hover{ color:var(--gold); }
+.foot .sp{ flex:1 1 auto; }
+.disclaimer{ color:var(--muted); font-size:.76rem; max-width:62ch; }
+
+/* ---------- mobile order bar ---------- */
+.order-bar{
+  position:fixed; left:0; right:0; bottom:0; z-index:120;
+  display:none; gap:9px;
+  padding:9px var(--pad) calc(9px + env(safe-area-inset-bottom));
+  background:rgba(11,10,9,.95);
+  border-top:1px solid var(--line);
+  backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px);
+}
+.order-bar .btn{ flex:1 1 0; min-width:0; }
+/* Four actions in one thumb-width bar: WhatsApp keeps its label because it is
+   the primary action, the two partners shrink to their mark alone (the aria-label
+   carries the meaning), and Call holds a fixed minimum so it never collapses to
+   an unreadable sliver. */
+.order-bar .btn--wa{ flex:2 1 0; }
+.order-bar .bar-p{ flex:0 0 auto; padding-inline:.8em; }
+/* mark-only partner button, for rows where a full label will not fit */
+.btn--mark{ padding-inline:.9em; }
+.btn--mark .pname{ font-size:.86em; }
+@media (max-width:759px){ .hdr-p{ display:none; } }  /* phones get the sticky bar instead */
+.order-bar .bar-p .pname{ font-size:.82em; }
+@media (max-width:759px){
+  .order-bar{ display:flex; }
+  .site-footer{ padding-bottom:calc(76px + env(safe-area-inset-bottom)); }
+}
+
+/* ---------- reduced motion ---------- */
+@media (prefers-reduced-motion: reduce){
+  .js .rise,
+  .js .page.enter .rise{ opacity:1 !important; transform:none !important; animation:none !important; }
+  #curtain{ display:none; }
+  *,*::before,*::after{
+    animation-duration:.001ms !important;
+    animation-iteration-count:1 !important;
+    transition-duration:.001ms !important;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<a class="skip" href="#main">Skip to content</a>
+
+<div id="curtain" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
+
+<header class="site-header">
+  <div class="wrap bar">
+    <a class="brand" href="#/home" aria-label="Riaan's Kitchen — home">
+      <img src="assets/logo.jpg" alt="Riaan's Kitchen" width="1000" height="936" decoding="async">
+      <span class="brand-name">Riaan's<br>Kitchen</span>
+    </a>
+
+    <nav class="tabs" id="tabs" aria-label="Pages">
+      <span id="pill" aria-hidden="true"></span>
+      <a href="#/home"    data-p="home">Home</a>
+      <a href="#/menu"    data-p="menu">Menu</a>
+      <a href="#/deal"    data-p="deal">Family Deal</a>
+      <a href="#/gallery" data-p="gallery">Gallery</a>
+      <a href="#/find"    data-p="find">Find us</a>
+    </nav>
+
+    <a class="btn btn--wa btn--sm header-cta"
+       href="https://wa.me/447368963886?text=Hi%20Riaan%27s%20Kitchen%2C%20I%27d%20like%20to%20order"
+       target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M17.47 14.38c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.16-.17.2-.35.22-.64.08-.3-.15-1.26-.46-2.39-1.48-.88-.79-1.48-1.76-1.65-2.06-.17-.3-.02-.46.13-.6.13-.14.3-.35.45-.52.15-.18.2-.3.3-.5.1-.2.05-.37-.03-.52-.07-.15-.67-1.61-.92-2.2-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.48s1.07 2.87 1.21 3.07c.15.2 2.1 3.2 5.08 4.49.71.3 1.26.49 1.69.62.71.23 1.36.2 1.87.12.57-.09 1.76-.72 2-1.41.25-.7.25-1.29.18-1.42-.08-.12-.27-.2-.57-.35M12.05 21.79h-.01a9.87 9.87 0 0 1-5.03-1.38l-.36-.21-3.74.98 1-3.65-.24-.37a9.86 9.86 0 0 1-1.51-5.26c0-5.45 4.44-9.89 9.89-9.89 2.64 0 5.12 1.03 6.99 2.9a9.83 9.83 0 0 1 2.89 6.99c0 5.45-4.43 9.89-9.88 9.89m8.41-18.3A11.81 11.81 0 0 0 12.05 0C5.5 0 .16 5.34.16 11.89c0 2.1.55 4.14 1.59 5.95L.06 24l6.3-1.65a11.88 11.88 0 0 0 5.69 1.45h.005c6.55 0 11.89-5.34 11.89-11.89 0-3.18-1.24-6.17-3.48-8.42"/></svg>
+      <span>Order</span>
+    </a>
+    <a class="btn btn--roo btn--sm btn--mark hdr-p" href="https://deliveroo.co.uk/menu/london/uxbridge-moor/cloud-ix-kitchens-ltd-t-a-riaanskitchen-4-eskdale-road" target="_blank" rel="noopener"
+       aria-label="Order from Riaan's Kitchen on Deliveroo">
+      <span class="pname">Deliveroo</span>
+    </a>
+    <a class="btn btn--ue btn--sm btn--mark hdr-p" href="https://www.ubereats.com/store/riaans-kitchen/cAShZtPyTMKPPeI_7UvhKQ" target="_blank" rel="noopener"
+       aria-label="Order from Riaan's Kitchen on Uber Eats">
+      <span class="pname">Uber<span class="pand"> Eats</span></span>
+    </a>
+  </div>
+  <div class="rrail" id="rrail"><i></i></div>
+</header>
+
+<main id="main">
+
+  <!-- ═══════════ HOME ═══════════ -->
+  <section class="page" id="p-home" aria-labelledby="t-home">
+    <div class="wrap">
+      <div class="home-grid">
+        <div>
+          <img class="home-logo rise" style="--i:0" src="assets/logo.jpg" alt="Riaan's Kitchen" width="1000" height="936" decoding="async">
+          <h1 id="t-home" class="ptitle rise" data-title style="--i:1">Riaan's Kitchen</h1>
+          <p class="home-cuisine rise" style="--i:2">Indian &amp; Pakistani Cuisine</p>
+          <p class="strap rise" style="--i:3">Authentic · Fresh · Flavoursome</p>
+          <div class="cta-row rise" style="--i:4">
+            <a class="btn btn--wa"
+               href="https://wa.me/447368963886?text=Hi%20Riaan%27s%20Kitchen%2C%20I%27d%20like%20to%20order"
+               target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M17.47 14.38c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.16-.17.2-.35.22-.64.08-.3-.15-1.26-.46-2.39-1.48-.88-.79-1.48-1.76-1.65-2.06-.17-.3-.02-.46.13-.6.13-.14.3-.35.45-.52.15-.18.2-.3.3-.5.1-.2.05-.37-.03-.52-.07-.15-.67-1.61-.92-2.2-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.48s1.07 2.87 1.21 3.07c.15.2 2.1 3.2 5.08 4.49.71.3 1.26.49 1.69.62.71.23 1.36.2 1.87.12.57-.09 1.76-.72 2-1.41.25-.7.25-1.29.18-1.42-.08-.12-.27-.2-.57-.35M12.05 21.79h-.01a9.87 9.87 0 0 1-5.03-1.38l-.36-.21-3.74.98 1-3.65-.24-.37a9.86 9.86 0 0 1-1.51-5.26c0-5.45 4.44-9.89 9.89-9.89 2.64 0 5.12 1.03 6.99 2.9a9.83 9.83 0 0 1 2.89 6.99c0 5.45-4.43 9.89-9.88 9.89m8.41-18.3A11.81 11.81 0 0 0 12.05 0C5.5 0 .16 5.34.16 11.89c0 2.1.55 4.14 1.59 5.95L.06 24l6.3-1.65a11.88 11.88 0 0 0 5.69 1.45h.005c6.55 0 11.89-5.34 11.89-11.89 0-3.18-1.24-6.17-3.48-8.42"/></svg>
+              <span>Order on WhatsApp</span>
+            </a>
+            <a class="btn btn--roo" href="https://deliveroo.co.uk/menu/london/uxbridge-moor/cloud-ix-kitchens-ltd-t-a-riaanskitchen-4-eskdale-road" target="_blank" rel="noopener">
+              <span class="pname">Deliveroo</span>
+              <span>Click to order</span>
+            </a>
+            <a class="btn btn--ue" href="https://www.ubereats.com/store/riaans-kitchen/cAShZtPyTMKPPeI_7UvhKQ" target="_blank" rel="noopener">
+              <span class="pname">Uber<span class="pand"> Eats</span></span>
+              <span>Click to order</span>
+            </a>
+            <a class="btn btn--ghost" href="tel:07368963886">
+              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.2.2 2.4.6 3.6.1.3 0 .7-.2 1l-2.3 2.2Z"/></svg>
+              <span>07368 963886</span>
+            </a>
+          </div>
+        </div>
+
+        <figure class="photo photo--hero rise" style="--i:3;margin:0">
+          <img src="img/lamb-karahi.jpg"
+               alt="Lamb karahi, slow-cooked on the bone with dried red chilli and ginger, served whole in a cast-iron karahi"
+               width="1600" height="1200" fetchpriority="high" decoding="async">
+          <figcaption class="photo-cap">Lamb Karahi</figcaption>
+        </figure>
+      </div>
+
+      <div class="tiles rise" style="--i:5">
+        <a class="tile" href="#/menu">
+          <span><b>The menu</b><span>Chaat, karahi, slow cooked, vegetarian</span></span>
+          <span class="arw" aria-hidden="true">→</span>
+        </a>
+        <a class="tile" href="#/deal">
+          <span><b>Family Deal £49.95</b><span>Feeds the table, with free salad and drink</span></span>
+          <span class="arw" aria-hidden="true">→</span>
+        </a>
+        <a class="tile" href="#/find">
+          <span><b>Find us</b><span>4 Eskdale Road, Uxbridge UB8 2RT</span></span>
+          <span class="arw" aria-hidden="true">→</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════ MENU ═══════════ -->
+  <section class="page" id="p-menu" aria-labelledby="t-menu" hidden>
+    <div class="wrap">
+      <div class="head-row">
+        <div class="rise" style="--i:0">
+          <p class="eyebrow">The Menu</p>
+          <h2 id="t-menu" class="ptitle" data-title>Chaat, karahi and slow cooked</h2>
+        </div>
+        <div class="head-actions">
+          <a class="btn btn--wa btn--sm rise" style="--i:1"
+             href="https://wa.me/447368963886?text=Hi%20Riaan%27s%20Kitchen%2C%20I%27d%20like%20to%20order"
+             target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M17.47 14.38c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.16-.17.2-.35.22-.64.08-.3-.15-1.26-.46-2.39-1.48-.88-.79-1.48-1.76-1.65-2.06-.17-.3-.02-.46.13-.6.13-.14.3-.35.45-.52.15-.18.2-.3.3-.5.1-.2.05-.37-.03-.52-.07-.15-.67-1.61-.92-2.2-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.48s1.07 2.87 1.21 3.07c.15.2 2.1 3.2 5.08 4.49.71.3 1.26.49 1.69.62.71.23 1.36.2 1.87.12.57-.09 1.76-.72 2-1.41.25-.7.25-1.29.18-1.42-.08-.12-.27-.2-.57-.35M12.05 21.79h-.01a9.87 9.87 0 0 1-5.03-1.38l-.36-.21-3.74.98 1-3.65-.24-.37a9.86 9.86 0 0 1-1.51-5.26c0-5.45 4.44-9.89 9.89-9.89 2.64 0 5.12 1.03 6.99 2.9a9.83 9.83 0 0 1 2.89 6.99c0 5.45-4.43 9.89-9.88 9.89m8.41-18.3A11.81 11.81 0 0 0 12.05 0C5.5 0 .16 5.34.16 11.89c0 2.1.55 4.14 1.59 5.95L.06 24l6.3-1.65a11.88 11.88 0 0 0 5.69 1.45h.005c6.55 0 11.89-5.34 11.89-11.89 0-3.18-1.24-6.17-3.48-8.42"/></svg>
+            <span>Order on WhatsApp</span>
+          </a>
+          <a class="btn btn--roo btn--sm btn--mark " href="https://deliveroo.co.uk/menu/london/uxbridge-moor/cloud-ix-kitchens-ltd-t-a-riaanskitchen-4-eskdale-road" target="_blank" rel="noopener"
+             aria-label="Order from Riaan's Kitchen on Deliveroo">
+            <span class="pname">Deliveroo</span>
+          </a>
+          <a class="btn btn--ue btn--sm btn--mark " href="https://www.ubereats.com/store/riaans-kitchen/cAShZtPyTMKPPeI_7UvhKQ" target="_blank" rel="noopener"
+             aria-label="Order from Riaan's Kitchen on Uber Eats">
+            <span class="pname">Uber<span class="pand"> Eats</span></span>
+          </a>
+        </div>
+      </div>
+
+      <div class="menu-cols">
+        <div class="rise" style="--i:2">
+          <div class="course">
+            <h3>Starters</h3>
+            <ul class="rows">
+              <li class="row" data-hay="lamb seekh kebab (2)"><span class="n">Lamb Seekh Kebab (2)<span class="heat" role="img" aria-label="1 chilli"><i></i></span></span><span class="p">£4.95</span></li>
+              <li class="row" data-hay="chicken seekh kebab (2)"><span class="n">Chicken Seekh Kebab (2)</span><span class="p">£4.95</span></li>
+              <li class="row" data-hay="chicken tikka"><span class="n">Chicken Tikka<span class="heat" role="img" aria-label="1 chilli"><i></i></span></span><span class="p">£7.99</span></li>
+              <li class="row" data-hay="lamb tikka"><span class="n">Lamb Tikka<span class="heat" role="img" aria-label="1 chilli"><i></i></span></span><span class="p">£8.99</span></li>
+              <li class="row" data-hay="lamb chops (4)"><span class="n">Lamb Chops (4)<span class="heat" role="img" aria-label="1 chilli"><i></i></span></span><span class="p">£9.95</span></li>
+              <li class="row" data-hay="chicken wings (6)"><span class="n">Chicken Wings (6)<span class="heat" role="img" aria-label="1 chilli"><i></i></span></span><span class="p">£7.99</span></li>
+              <li class="row" data-hay="tandoori chicken (half)"><span class="n">Tandoori Chicken (Half)<span class="heat" role="img" aria-label="1 chilli"><i></i></span></span><span class="p">£7.45</span></li>
+              <li class="row" data-hay="lamb samosa (2)"><span class="n">Lamb Samosa (2)</span><span class="p">£4.05</span></li>
+              <li class="row" data-hay="veg samosa (2)"><span class="n">Veg Samosa (2)</span><span class="p">£3.55</span></li>
+              <li class="row" data-hay="malai tikka (6)"><span class="n">Malai Tikka (6)</span><span class="p">£7.15</span></li>
+              <li class="row" data-hay="lahori tawa chicken"><span class="n">Lahori Tawa Chicken<span class="heat" role="img" aria-label="3 chillis"><i></i><i></i><i></i></span></span><span class="p">£8.05</span></li>
+              <li class="row" data-hay="paneer tikka"><span class="n">Paneer Tikka<span class="heat" role="img" aria-label="1 chilli"><i></i></span></span><span class="p">£6.25</span></li>
+              <li class="row" data-hay="samosa chaat"><span class="n">Samosa Chaat</span><span class="p">£6.25</span></li>
+              <li class="row" data-hay="papri chaat"><span class="n">Papri Chaat<span class="heat" role="img" aria-label="1 chilli"><i></i></span></span><span class="p">£6.25</span></li>
+            </ul>
+          </div>
+          <div class="course">
+            <h3>Rolls</h3>
+            <ul class="rows">
+              <li class="row" data-hay="chicken kebab roll"><span class="n">Chicken Kebab Roll</span><span class="p">£6.95</span></li>
+              <li class="row" data-hay="lamb kebab roll"><span class="n">Lamb Kebab Roll<span class="heat" role="img" aria-label="1 chilli"><i></i></span></span><span class="p">£7.45</span></li>
+              <li class="row" data-hay="chicken tikka roll"><span class="n">Chicken Tikka Roll<span class="heat" role="img" aria-label="1 chilli"><i></i></span></span><span class="p">£7.45</span></li>
+            </ul>
+          </div>
+          <div class="course">
+            <h3>Chicken curries</h3>
+            <ul class="rows">
+              <li class="row" data-hay="chicken karahi"><span class="n">Chicken Karahi<span class="heat" role="img" aria-label="2 chillis"><i></i><i></i></span></span><span class="p">£11.65</span></li>
+              <li class="row" data-hay="bhuna chicken"><span class="n">Bhuna Chicken<span class="heat" role="img" aria-label="2 chillis"><i></i><i></i></span></span><span class="p">£11.65</span></li>
+              <li class="row" data-hay="butter chicken"><span class="n">Butter Chicken<span class="heat" role="img" aria-label="1 chilli"><i></i></span></span><span class="p">£12.55</span></li>
+              <li class="row" data-hay="chicken tikka masala"><span class="n">Chicken Tikka Masala<span class="heat" role="img" aria-label="1 chilli"><i></i></span></span><span class="p">£12.55</span></li>
+              <li class="row" data-hay="chicken korma"><span class="n">Chicken Korma</span><span class="p">£11.65</span></li>
+              <li class="row" data-hay="ginger chicken"><span class="n">Ginger Chicken<span class="heat" role="img" aria-label="3 chillis"><i></i><i></i><i></i></span></span><span class="p">£11.65</span></li>
+              <li class="row" data-hay="achari chicken"><span class="n">Achari Chicken<span class="heat" role="img" aria-label="3 chillis"><i></i><i></i><i></i></span></span><span class="p">£11.65</span></li>
+            </ul>
+          </div>
+          <div class="course">
+            <h3>Lamb curries</h3>
+            <ul class="rows">
+              <li class="row" data-hay="lamb karahi"><span class="n">Lamb Karahi<span class="heat" role="img" aria-label="2 chillis"><i></i><i></i></span></span><span class="p">£13.45</span></li>
+              <li class="row" data-hay="lamb bhuna"><span class="n">Lamb Bhuna<span class="heat" role="img" aria-label="2 chillis"><i></i><i></i></span></span><span class="p">£13.45</span></li>
+              <li class="row" data-hay="palak lamb"><span class="n">Palak Lamb<span class="heat" role="img" aria-label="2 chillis"><i></i><i></i></span></span><span class="p">£13.45</span></li>
+              <li class="row" data-hay="achari lamb"><span class="n">Achari Lamb<span class="heat" role="img" aria-label="3 chillis"><i></i><i></i><i></i></span></span><span class="p">£13.45</span></li>
+              <li class="row" data-hay="tawa keema"><span class="n">Tawa Keema<span class="heat" role="img" aria-label="3 chillis"><i></i><i></i><i></i></span></span><span class="p">£12.55</span></li>
+              <li class="row" data-hay="lamb chops karahi"><span class="n">Lamb Chops Karahi<span class="heat" role="img" aria-label="3 chillis"><i></i><i></i><i></i></span></span><span class="p">£16.15</span></li>
+            </ul>
+          </div>
+          <div class="course">
+            <h3>Vegetarian</h3>
+            <ul class="rows">
+              <li class="row" data-hay="mixed veg"><span class="n">Mixed Veg<span class="heat" role="img" aria-label="1 chilli"><i></i></span></span><span class="p">£8.99</span></li>
+              <li class="row" data-hay="palak paneer"><span class="n">Palak Paneer<span class="heat" role="img" aria-label="1 chilli"><i></i></span></span><span class="p">£8.99</span></li>
+              <li class="row" data-hay="paneer tikka masala"><span class="n">Paneer Tikka Masala<span class="heat" role="img" aria-label="1 chilli"><i></i></span></span><span class="p">£9.99</span></li>
+              <li class="row" data-hay="masala bhindi"><span class="n">Masala Bhindi<span class="heat" role="img" aria-label="1 chilli"><i></i></span></span><span class="p">£8.99</span></li>
+              <li class="row" data-hay="tadka daal"><span class="n">Tadka Daal<span class="heat" role="img" aria-label="1 chilli"><i></i></span></span><span class="p">£8.99</span></li>
+              <li class="row" data-hay="mash daal"><span class="n">Mash Daal<span class="heat" role="img" aria-label="1 chilli"><i></i></span></span><span class="p">£8.95</span></li>
+              <li class="row" data-hay="daal makhani"><span class="n">Daal Makhani<span class="heat" role="img" aria-label="1 chilli"><i></i></span></span><span class="p">£9.85</span></li>
+              <li class="row" data-hay="lahori channay"><span class="n">Lahori Channay<span class="heat" role="img" aria-label="1 chilli"><i></i></span></span><span class="p">£8.05</span></li>
+              <li class="row" data-hay="lahori channay asanda"><span class="n">Lahori Channay Asanda<span class="heat" role="img" aria-label="2 chillis"><i></i><i></i></span></span><span class="p">£8.95</span></li>
+            </ul>
+          </div>
+          <div class="course">
+            <h3>Weekend specials</h3>
+            <ul class="rows">
+              <li class="row" data-hay="lamb nihari"><span class="n">Lamb Nihari</span><span class="p">£12.99</span></li>
+              <li class="row" data-hay="haleem"><span class="n">Haleem</span><span class="p">£11.99</span></li>
+              <li class="row" data-hay="lahori tawa chicken"><span class="n">Lahori Tawa Chicken</span><span class="p">£10.45</span></li>
+            </ul>
+          </div>
+        </div>
+        <div class="rise" style="--i:3">
+          <div class="course">
+            <h3>Rice</h3>
+            <ul class="rows">
+              <li class="row" data-hay="plain rice"><span class="n">Plain Rice</span><span class="p">£2.50</span></li>
+              <li class="row" data-hay="pilau rice"><span class="n">Pilau Rice</span><span class="p">£2.95</span></li>
+              <li class="row" data-hay="zeera rice"><span class="n">Zeera Rice</span><span class="p">£3.50</span></li>
+              <li class="row" data-hay="veg biryani"><span class="n">Veg Biryani</span><span class="p">£9.95</span></li>
+              <li class="row" data-hay="chicken biryani"><span class="n">Chicken Biryani</span><span class="p">£10.95</span></li>
+              <li class="row" data-hay="lamb biryani"><span class="n">Lamb Biryani</span><span class="p">£11.95</span></li>
+            </ul>
+          </div>
+          <div class="course">
+            <h3>Bread</h3>
+            <ul class="rows">
+              <li class="row" data-hay="plain naan"><span class="n">Plain Naan</span><span class="p">£1.50</span></li>
+              <li class="row" data-hay="butter naan"><span class="n">Butter Naan</span><span class="p">£1.95</span></li>
+              <li class="row" data-hay="garlic naan"><span class="n">Garlic Naan</span><span class="p">£2.50</span></li>
+              <li class="row" data-hay="garlic chilli naan"><span class="n">Garlic Chilli Naan</span><span class="p">£2.99</span></li>
+              <li class="row" data-hay="kulcha"><span class="n">Kulcha</span><span class="p">£2.50</span></li>
+              <li class="row" data-hay="tandoori roti"><span class="n">Tandoori Roti</span><span class="p">£1.50</span></li>
+              <li class="row" data-hay="achari paratha"><span class="n">Achari Paratha</span><span class="p">£3.50</span></li>
+              <li class="row" data-hay="keema naan"><span class="n">Keema Naan</span><span class="p">£3.95</span></li>
+            </ul>
+          </div>
+          <div class="course">
+            <h3>Sides</h3>
+            <ul class="rows">
+              <li class="row" data-hay="chips"><span class="n">Chips</span><span class="p">£2.65</span></li>
+              <li class="row" data-hay="fresh salad"><span class="n">Fresh Salad</span><span class="p">£2.65</span></li>
+              <li class="row" data-hay="raita"><span class="n">Raita</span><span class="p">£2.25</span></li>
+            </ul>
+          </div>
+          <div class="course">
+            <h3>Drinks</h3>
+            <ul class="rows">
+              <li class="row" data-hay="330ml can"><span class="n">330ml can</span><span class="p">£1.50</span><span class="d">Coca-Cola, Diet Coke, Coke Zero, Sprite, Fanta Orange</span></li>
+              <li class="row" data-hay="500ml water"><span class="n">500ml water</span><span class="p">£1.50</span></li>
+            </ul>
+          </div>
+          <div class="course">
+            <h3>Mix grills</h3>
+            <ul class="rows">
+              <li class="row" data-hay="mix grill — 2 people"><span class="n">Mix Grill — 2 people</span><span class="p">£29.95</span><span class="d">Free: 2 plain naans, 1 pilau rice, fresh salad</span></li>
+              <li class="row" data-hay="family mix grill — 4 people"><span class="n">Family Mix Grill — 4 people</span><span class="p">£49.95</span><span class="d">Lamb chops, lamb seekh kebab, chicken seekh kebab, lamb tikka, chicken tikka, chicken wings. Free: 2 plain naans, 1 × 1.5L soft drink, fresh salad</span></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <p class="menu-note">Feeding a table? The <a href="#/deal" style="color:var(--gold);font-weight:600">Family Deal is £49.95</a> — two curries, two rice, two naans, two starters, plus free salad and a 1.5L drink.</p>
+    </div>
+  </section>
+
+  <!-- ═══════════ FAMILY DEAL ═══════════ -->
+  <section class="page" id="p-deal" aria-labelledby="t-deal" hidden>
+    <div class="wrap">
+      <div class="deal-grid">
+        <div class="deal-panel rise" style="--i:0">
+          <p class="eyebrow eyebrow--chilli">The Family Deal</p>
+          <h2 id="t-deal" class="ptitle" data-title style="font-size:clamp(1.9rem,4vw,2.9rem)">Everything for the table</h2>
+          <p class="deal-price">£49.95</p>
+
+          <div class="deal-lists">
+            <div>
+              <h3>Includes</h3>
+              <ul class="ticks">
+                <li>2 Curries</li>
+                <li>2 Rice</li>
+                <li>2 Plain naans</li>
+                <li>2 Starters</li>
+              </ul>
+            </div>
+            <div>
+              <h3>Plus free</h3>
+              <ul>
+                <li><span class="free-chip">FREE</span> Fresh Salad</li>
+                <li><span class="free-chip">FREE</span> 1 &times; 1.5L Soft Drink</li>
+              </ul>
+            </div>
+          </div>
+
+          <a class="btn btn--gold"
+             href="https://wa.me/447368963886?text=Hi%20Riaan%27s%20Kitchen%2C%20I%27d%20like%20to%20order%20the%20Family%20Deal%20%28%C2%A349.95%29"
+             target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M17.47 14.38c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.16-.17.2-.35.22-.64.08-.3-.15-1.26-.46-2.39-1.48-.88-.79-1.48-1.76-1.65-2.06-.17-.3-.02-.46.13-.6.13-.14.3-.35.45-.52.15-.18.2-.3.3-.5.1-.2.05-.37-.03-.52-.07-.15-.67-1.61-.92-2.2-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.48s1.07 2.87 1.21 3.07c.15.2 2.1 3.2 5.08 4.49.71.3 1.26.49 1.69.62.71.23 1.36.2 1.87.12.57-.09 1.76-.72 2-1.41.25-.7.25-1.29.18-1.42-.08-.12-.27-.2-.57-.35M12.05 21.79h-.01a9.87 9.87 0 0 1-5.03-1.38l-.36-.21-3.74.98 1-3.65-.24-.37a9.86 9.86 0 0 1-1.51-5.26c0-5.45 4.44-9.89 9.89-9.89 2.64 0 5.12 1.03 6.99 2.9a9.83 9.83 0 0 1 2.89 6.99c0 5.45-4.43 9.89-9.88 9.89m8.41-18.3A11.81 11.81 0 0 0 12.05 0C5.5 0 .16 5.34.16 11.89c0 2.1.55 4.14 1.59 5.95L.06 24l6.3-1.65a11.88 11.88 0 0 0 5.69 1.45h.005c6.55 0 11.89-5.34 11.89-11.89 0-3.18-1.24-6.17-3.48-8.42"/></svg>
+            <span>Order the Family Deal</span>
+          </a>
+          <a class="btn btn--roo btn--sm btn--mark " href="https://deliveroo.co.uk/menu/london/uxbridge-moor/cloud-ix-kitchens-ltd-t-a-riaanskitchen-4-eskdale-road" target="_blank" rel="noopener"
+             aria-label="Order from Riaan's Kitchen on Deliveroo">
+            <span class="pname">Deliveroo</span>
+          </a>
+          <a class="btn btn--ue btn--sm btn--mark " href="https://www.ubereats.com/store/riaans-kitchen/cAShZtPyTMKPPeI_7UvhKQ" target="_blank" rel="noopener"
+             aria-label="Order from Riaan's Kitchen on Uber Eats">
+            <span class="pname">Uber<span class="pand"> Eats</span></span>
+          </a>
+
+        </div>
+
+        <div class="rise" style="--i:1">
+          <figure class="photo photo--hero" style="margin:0">
+            <img src="img/lamb-shank-nihari.jpg"
+                 alt="Lamb shank nihari with marrow, lime and ginger, served whole in a cast-iron karahi"
+                 width="1600" height="1200" loading="lazy" decoding="async">
+            <figcaption class="photo-cap">Lamb Shank Nihari</figcaption>
+          </figure>
+          <p class="lede" style="margin-top:16px;font-size:.92rem">
+            Have a look at the <a href="#/menu" style="color:var(--gold);font-weight:600">menu</a>,
+            then message us on WhatsApp and tell us what you'd like.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════ GALLERY ═══════════ -->
+  <section class="page" id="p-gallery" aria-labelledby="t-gallery" hidden>
+    <div class="wrap">
+      <div class="head-row">
+        <div class="rise" style="--i:0">
+          <p class="eyebrow">The dishes</p>
+          <h2 id="t-gallery" class="ptitle" data-title>Straight out of the karahi</h2>
+        </div>
+        <div class="head-actions">
+          <a class="btn btn--wa btn--sm rise" style="--i:1"
+             href="https://wa.me/447368963886?text=Hi%20Riaan%27s%20Kitchen%2C%20I%27d%20like%20to%20order"
+             target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M17.47 14.38c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.16-.17.2-.35.22-.64.08-.3-.15-1.26-.46-2.39-1.48-.88-.79-1.48-1.76-1.65-2.06-.17-.3-.02-.46.13-.6.13-.14.3-.35.45-.52.15-.18.2-.3.3-.5.1-.2.05-.37-.03-.52-.07-.15-.67-1.61-.92-2.2-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.48s1.07 2.87 1.21 3.07c.15.2 2.1 3.2 5.08 4.49.71.3 1.26.49 1.69.62.71.23 1.36.2 1.87.12.57-.09 1.76-.72 2-1.41.25-.7.25-1.29.18-1.42-.08-.12-.27-.2-.57-.35M12.05 21.79h-.01a9.87 9.87 0 0 1-5.03-1.38l-.36-.21-3.74.98 1-3.65-.24-.37a9.86 9.86 0 0 1-1.51-5.26c0-5.45 4.44-9.89 9.89-9.89 2.64 0 5.12 1.03 6.99 2.9a9.83 9.83 0 0 1 2.89 6.99c0 5.45-4.43 9.89-9.88 9.89m8.41-18.3A11.81 11.81 0 0 0 12.05 0C5.5 0 .16 5.34.16 11.89c0 2.1.55 4.14 1.59 5.95L.06 24l6.3-1.65a11.88 11.88 0 0 0 5.69 1.45h.005c6.55 0 11.89-5.34 11.89-11.89 0-3.18-1.24-6.17-3.48-8.42"/></svg>
+            <span>Order on WhatsApp</span>
+          </a>
+          <a class="btn btn--roo btn--sm btn--mark " href="https://deliveroo.co.uk/menu/london/uxbridge-moor/cloud-ix-kitchens-ltd-t-a-riaanskitchen-4-eskdale-road" target="_blank" rel="noopener"
+             aria-label="Order from Riaan's Kitchen on Deliveroo">
+            <span class="pname">Deliveroo</span>
+          </a>
+          <a class="btn btn--ue btn--sm btn--mark " href="https://www.ubereats.com/store/riaans-kitchen/cAShZtPyTMKPPeI_7UvhKQ" target="_blank" rel="noopener"
+             aria-label="Order from Riaan's Kitchen on Uber Eats">
+            <span class="pname">Uber<span class="pand"> Eats</span></span>
+          </a>
+        </div>
+      </div>
+
+      <div class="gal">
+        <figure class="photo gal-stage rise" style="--i:2;margin:0">
+          <img id="galImg" src="img/lamb-karahi.jpg"
+               alt="Lamb karahi, slow-cooked on the bone with dried red chilli and ginger"
+               width="1600" height="1200" decoding="async">
+          <figcaption class="photo-cap" id="galCap">Lamb Karahi</figcaption>
+        </figure>
+
+        <div class="thumbs rise" style="--i:3" id="thumbs" role="group" aria-label="Choose a dish to view">
+          <button class="thumb" type="button" aria-current="true" data-src="img/lamb-karahi.jpg" data-name="Lamb Karahi" data-alt="Lamb karahi, slow-cooked on the bone with dried red chilli and ginger">
+            <img src="img/lamb-karahi.jpg" alt="Lamb Karahi" width="1600" height="1200" loading="lazy" decoding="async"></button>
+          <button class="thumb" type="button" data-src="img/chicken-jalfrezi.jpg" data-name="Chicken Jalfrezi" data-alt="Chicken jalfrezi with peppers, onion and cumin">
+            <img src="img/chicken-jalfrezi.jpg" alt="Chicken Jalfrezi" width="1600" height="1200" loading="lazy" decoding="async"></button>
+          <button class="thumb" type="button" data-src="img/achari-gosht.jpg" data-name="Achari Gosht" data-alt="Achari gosht — lamb with pickling spice and tomato wedges">
+            <img src="img/achari-gosht.jpg" alt="Achari Gosht" width="1600" height="1200" loading="lazy" decoding="async"></button>
+          <button class="thumb" type="button" data-src="img/lamb-shank-nihari.jpg" data-name="Lamb Shank Nihari" data-alt="Lamb shank nihari with marrow, lime and ginger">
+            <img src="img/lamb-shank-nihari.jpg" alt="Lamb Shank Nihari" width="1600" height="1200" loading="lazy" decoding="async"></button>
+          <button class="thumb" type="button" data-src="img/haleem.jpg" data-name="Haleem" data-alt="Haleem of wheat, lentils and beef with a full condiment set">
+            <img src="img/haleem.jpg" alt="Haleem" width="1536" height="2048" loading="lazy" decoding="async"></button>
+          <button class="thumb" type="button" data-src="img/gosht-palak.jpg" data-name="Gosht Palak" data-alt="Gosht palak — lamb and spinach with garlic, ginger and cream">
+            <img src="img/gosht-palak.jpg" alt="Gosht Palak" width="1600" height="1200" loading="lazy" decoding="async"></button>
+          <button class="thumb" type="button" data-src="img/kofta-curry.jpg" data-name="Kofta Curry" data-alt="Kofta curry with hand-rolled lamb koftas, cream and crisp onion">
+            <img src="img/kofta-curry.jpg" alt="Kofta Curry" width="1600" height="1200" loading="lazy" decoding="async"></button>
+          <button class="thumb" type="button" data-src="img/tandoori-chicken.jpg" data-name="Tandoori Chicken" data-alt="Tandoori chicken, charred, with lemon and onion">
+            <img src="img/tandoori-chicken.jpg" alt="Tandoori Chicken" width="1600" height="1200" loading="lazy" decoding="async"></button>
+          <button class="thumb" type="button" data-src="img/papri-chaat.jpg" data-name="Papri Chaat" data-alt="Papri chaat topped with pomegranate, yoghurt and tamarind">
+            <img src="img/papri-chaat.jpg" alt="Papri Chaat" width="1536" height="2048" loading="lazy" decoding="async"></button>
+          <button class="thumb" type="button" data-src="img/paneer-makhani.jpg" data-name="Paneer Makhani" data-alt="Paneer makhani in a tomato and butter gravy with cream and fenugreek">
+            <img src="img/paneer-makhani.jpg" alt="Paneer Makhani" width="1536" height="2048" loading="lazy" decoding="async"></button>
+          <button class="thumb" type="button" data-src="img/bhindi-masala-2.jpg" data-name="Bhindi Masala" data-alt="Bhindi masala — dry-fried okra with onion and tomato">
+            <img src="img/bhindi-masala-2.jpg" alt="Bhindi Masala" width="1600" height="1200" loading="lazy" decoding="async"></button>
+          <button class="thumb" type="button" data-src="img/tarka-daal-2.jpg" data-name="Tarka Daal" data-alt="Tarka daal with a burnt garlic tempering and green chilli">
+            <img src="img/tarka-daal-2.jpg" alt="Tarka Daal" width="1600" height="1200" loading="lazy" decoding="async"></button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════ FIND US ═══════════ -->
+  <section class="page" id="p-find" aria-labelledby="t-find" hidden>
+    <div class="wrap">
+      <div class="find-grid">
+        <div>
+          <p class="eyebrow rise" style="--i:0">Find us</p>
+          <h2 id="t-find" class="ptitle rise" data-title style="--i:1">4 Eskdale Road, Uxbridge</h2>
+
+          <div class="rise" style="--i:2">
+            <div style="margin-top:20px">
+              <div class="contact-row">
+                <span class="contact-label">Address</span>
+                <address class="contact-value">4 Eskdale Road, Uxbridge UB8 2RT</address>
+              </div>
+              <div class="contact-row">
+                <span class="contact-label">Phone</span>
+                <p class="contact-value"><a href="tel:07368963886">07368 963886</a></p>
+              </div>
+              <div class="contact-row">
+                <span class="contact-label">WhatsApp</span>
+                <p class="contact-value"><a href="https://wa.me/447368963886?text=Hi%20Riaan%27s%20Kitchen%2C%20I%27d%20like%20to%20order" target="_blank" rel="noopener">Message to order</a></p>
+              </div>
+              <div class="contact-row">
+                <span class="contact-label">Deliveroo</span>
+                <p class="contact-value"><a href="https://deliveroo.co.uk/menu/london/uxbridge-moor/cloud-ix-kitchens-ltd-t-a-riaanskitchen-4-eskdale-road" target="_blank" rel="noopener">Click to order</a></p>
+              </div>
+              <div class="contact-row">
+                <span class="contact-label">Uber Eats</span>
+                <p class="contact-value"><a href="https://www.ubereats.com/store/riaans-kitchen/cAShZtPyTMKPPeI_7UvhKQ" target="_blank" rel="noopener">Click to order</a></p>
+              </div>
+              <div class="contact-row">
+                <span class="contact-label">Email</span>
+                <p class="contact-value"><a href="mailto:info@riaankitchen.com">info@riaankitchen.com</a></p>
+              </div>
+              <div class="contact-row">
+                <span class="contact-label">Instagram</span>
+                <p class="contact-value"><a href="https://instagram.com/riaanskitchen" target="_blank" rel="noopener">@riaanskitchen</a></p>
+              </div>
+            </div>
+
+            <p class="hours-note">Call or message to check today's hours.</p>
+
+            <div class="find-actions">
+              <a class="btn btn--wa"
+                 href="https://wa.me/447368963886?text=Hi%20Riaan%27s%20Kitchen%2C%20I%27d%20like%20to%20order"
+                 target="_blank" rel="noopener">
+                <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M17.47 14.38c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.16-.17.2-.35.22-.64.08-.3-.15-1.26-.46-2.39-1.48-.88-.79-1.48-1.76-1.65-2.06-.17-.3-.02-.46.13-.6.13-.14.3-.35.45-.52.15-.18.2-.3.3-.5.1-.2.05-.37-.03-.52-.07-.15-.67-1.61-.92-2.2-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.48s1.07 2.87 1.21 3.07c.15.2 2.1 3.2 5.08 4.49.71.3 1.26.49 1.69.62.71.23 1.36.2 1.87.12.57-.09 1.76-.72 2-1.41.25-.7.25-1.29.18-1.42-.08-.12-.27-.2-.57-.35M12.05 21.79h-.01a9.87 9.87 0 0 1-5.03-1.38l-.36-.21-3.74.98 1-3.65-.24-.37a9.86 9.86 0 0 1-1.51-5.26c0-5.45 4.44-9.89 9.89-9.89 2.64 0 5.12 1.03 6.99 2.9a9.83 9.83 0 0 1 2.89 6.99c0 5.45-4.43 9.89-9.88 9.89m8.41-18.3A11.81 11.81 0 0 0 12.05 0C5.5 0 .16 5.34.16 11.89c0 2.1.55 4.14 1.59 5.95L.06 24l6.3-1.65a11.88 11.88 0 0 0 5.69 1.45h.005c6.55 0 11.89-5.34 11.89-11.89 0-3.18-1.24-6.17-3.48-8.42"/></svg>
+                <span>Order on WhatsApp</span>
+              </a>
+              <a class="btn btn--roo"
+                 href="https://deliveroo.co.uk/menu/london/uxbridge-moor/cloud-ix-kitchens-ltd-t-a-riaanskitchen-4-eskdale-road"
+                 target="_blank" rel="noopener">
+                <span class="pname">Deliveroo</span>
+                <span>Click to order</span>
+              </a>
+              <a class="btn btn--ue"
+                 href="https://www.ubereats.com/store/riaans-kitchen/cAShZtPyTMKPPeI_7UvhKQ"
+                 target="_blank" rel="noopener">
+                <span class="pname">Uber<span class="pand"> Eats</span></span>
+                <span>Click to order</span>
+              </a>
+                          <a class="btn btn--ghost" href="tel:07368963886">
+                <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.2.2 2.4.6 3.6.1.3 0 .7-.2 1l-2.3 2.2Z"/></svg>
+                <span>Call us</span>
+              </a>
+              <a class="btn btn--ghost" href="mailto:info@riaankitchen.com">
+                <span>Email us</span>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="find-aside rise" style="--i:3">
+          <a class="map-card"
+             href="https://www.google.com/maps/search/?api=1&amp;query=4%20Eskdale%20Road%2C%20Uxbridge%20UB8%202RT"
+             target="_blank" rel="noopener">
+            <div class="map-face">
+              <span class="pin" aria-hidden="true">
+                <svg viewBox="0 0 24 24" focusable="false"><path d="M12 2a7 7 0 0 0-7 7c0 5.25 7 13 7 13s7-7.75 7-13a7 7 0 0 0-7-7Zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5Z"/></svg>
+              </span>
+              <strong>Open in Google Maps</strong>
+              <span>4 Eskdale Road, Uxbridge UB8 2RT</span>
+            </div>
+          </a>
+
+          <div class="qr-card">
+            <img src="img/instagram-qr.jpg" alt="Instagram QR code for @riaanskitchen" width="696" height="800" loading="lazy" decoding="async">
+            <div>
+              <h3>See the latest</h3>
+              <p>Scan the code, or follow us.</p>
+              <a href="https://instagram.com/riaanskitchen" target="_blank" rel="noopener">@riaanskitchen &rarr;</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap foot">
+    <nav class="foot-links" aria-label="Contact">
+      <a href="https://wa.me/447368963886?text=Hi%20Riaan%27s%20Kitchen%2C%20I%27d%20like%20to%20order" target="_blank" rel="noopener">WhatsApp</a>
+      <a href="https://deliveroo.co.uk/menu/london/uxbridge-moor/cloud-ix-kitchens-ltd-t-a-riaanskitchen-4-eskdale-road" target="_blank" rel="noopener">Deliveroo</a>
+      <a href="https://www.ubereats.com/store/riaans-kitchen/cAShZtPyTMKPPeI_7UvhKQ" target="_blank" rel="noopener">Uber Eats</a>
+      <a href="tel:07368963886">07368 963886</a>
+      <a href="mailto:info@riaankitchen.com">info@riaankitchen.com</a>
+      <a href="https://instagram.com/riaanskitchen" target="_blank" rel="noopener">@riaanskitchen</a>
+      <a href="https://www.google.com/maps/search/?api=1&amp;query=4%20Eskdale%20Road%2C%20Uxbridge%20UB8%202RT" target="_blank" rel="noopener">4 Eskdale Road, Uxbridge UB8 2RT</a>
+    </nav>
+    <span class="sp"></span>
+    <p class="disclaimer">Menu prices shown are indicative and subject to confirmation. The Family Deal is £49.95.</p>
+  </div>
+</footer>
+
+<div class="order-bar">
+  <!-- Label shortened to "WhatsApp": with four actions in the bar, "Order on
+       WhatsApp" measured 21px wider than its button and was being clipped. The
+       aria-label carries the full meaning. -->
+  <a class="btn btn--wa btn--sm"
+     href="https://wa.me/447368963886?text=Hi%20Riaan%27s%20Kitchen%2C%20I%27d%20like%20to%20order"
+     target="_blank" rel="noopener" aria-label="Order from Riaan's Kitchen on WhatsApp">
+    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M17.47 14.38c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.16-.17.2-.35.22-.64.08-.3-.15-1.26-.46-2.39-1.48-.88-.79-1.48-1.76-1.65-2.06-.17-.3-.02-.46.13-.6.13-.14.3-.35.45-.52.15-.18.2-.3.3-.5.1-.2.05-.37-.03-.52-.07-.15-.67-1.61-.92-2.2-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.48s1.07 2.87 1.21 3.07c.15.2 2.1 3.2 5.08 4.49.71.3 1.26.49 1.69.62.71.23 1.36.2 1.87.12.57-.09 1.76-.72 2-1.41.25-.7.25-1.29.18-1.42-.08-.12-.27-.2-.57-.35M12.05 21.79h-.01a9.87 9.87 0 0 1-5.03-1.38l-.36-.21-3.74.98 1-3.65-.24-.37a9.86 9.86 0 0 1-1.51-5.26c0-5.45 4.44-9.89 9.89-9.89 2.64 0 5.12 1.03 6.99 2.9a9.83 9.83 0 0 1 2.89 6.99c0 5.45-4.43 9.89-9.88 9.89m8.41-18.3A11.81 11.81 0 0 0 12.05 0C5.5 0 .16 5.34.16 11.89c0 2.1.55 4.14 1.59 5.95L.06 24l6.3-1.65a11.88 11.88 0 0 0 5.69 1.45h.005c6.55 0 11.89-5.34 11.89-11.89 0-3.18-1.24-6.17-3.48-8.42"/></svg>
+    <span>WhatsApp</span>
+  </a>
+  <a class="btn btn--roo btn--sm bar-p"
+     href="https://deliveroo.co.uk/menu/london/uxbridge-moor/cloud-ix-kitchens-ltd-t-a-riaanskitchen-4-eskdale-road"
+     target="_blank" rel="noopener" aria-label="Order from Riaan's Kitchen on Deliveroo">
+    <span class="pname">Deliveroo</span>
+  </a>
+  <a class="btn btn--ue btn--sm bar-p"
+     href="https://www.ubereats.com/store/riaans-kitchen/cAShZtPyTMKPPeI_7UvhKQ"
+     target="_blank" rel="noopener" aria-label="Order from Riaan's Kitchen on Uber Eats">
+    <span class="pname">Uber<span class="pand"> Eats</span></span>
+  </a>
+  <a class="btn btn--ghost btn--sm" href="tel:07368963886" aria-label="Call Riaan's Kitchen on 07368 963886">
+    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.2.2 2.4.6 3.6.1.3 0 .7-.2 1l-2.3 2.2Z"/></svg>
+    <span>Call</span>
+  </a>
+</div>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Restaurant",
+  "name": "Riaan's Kitchen",
+  "servesCuisine": ["Indian", "Pakistani"],
+  "image": "img/lamb-karahi.jpg",
+  "logo": "assets/logo.jpg",
+  "telephone": "+44 7368 963886",
+  "email": "info@riaankitchen.com",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "4 Eskdale Road",
+    "addressLocality": "Uxbridge",
+    "postalCode": "UB8 2RT",
+    "addressCountry": "GB"
+  },
+  "sameAs": ["https://instagram.com/riaanskitchen"]
+}
+</script>
+
+<script>
+(function () {
+  "use strict";
+
+  var RM = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ── routes ─────────────────────────────────────────────── */
+  var ORDER = ['home', 'menu', 'deal', 'gallery', 'find'];
+  var TITLES = {
+    home:    "Riaan's Kitchen — Indian & Pakistani Cuisine, Uxbridge",
+    menu:    "Menu — Riaan's Kitchen",
+    deal:    "Family Deal £49.95 — Riaan's Kitchen",
+    gallery: "Gallery — Riaan's Kitchen",
+    find:    "Find us — Riaan's Kitchen"
+  };
+
+  var tabs    = document.getElementById('tabs');
+  var pill    = document.getElementById('pill');
+  var rail    = document.getElementById('rrail');
+  var curtain = document.getElementById('curtain');
+
+  /* ── sliding nav pill: measured from the active link ────── */
+  function movePill(link, instant) {
+    if (!link || !pill) return;
+    if (instant) pill.classList.add('noanim');
+    pill.style.width = link.offsetWidth + 'px';
+    pill.style.transform = 'translateX(' + link.offsetLeft + 'px)';
+    if (instant) {
+      // force a reflow, then let transitions resume
+      void pill.offsetWidth;
+      pill.classList.remove('noanim');
+    }
+  }
+
+  function pageFromHash() {
+    var h = (location.hash || '').replace(/^#\/?/, '').trim().toLowerCase();
+    return ORDER.indexOf(h) > -1 ? h : 'home';
+  }
+
+  var current = null, busy = false, pending = null;
+
+  /* ── exactly one <h1> in the document: the visible page's title ──
+     Every page title carries data-title. The one on screen is retagged to
+     <h1>, the rest to <h2>. .ptitle keeps the typography identical, so the
+     swap is invisible. */
+  function retag(el, tag) {
+    var n = document.createElement(tag), a = el.attributes, i;
+    for (i = 0; i < a.length; i++) n.setAttribute(a[i].name, a[i].value);
+    n.innerHTML = el.innerHTML;
+    el.parentNode.replaceChild(n, el);
+    return n;
+  }
+  function syncHeadings(pageEl) {
+    var titles = document.querySelectorAll('[data-title]');
+    var active = pageEl.querySelector('[data-title]');
+    for (var i = 0; i < titles.length; i++) {
+      var want = (titles[i] === active) ? 'H1' : 'H2';
+      if (titles[i].tagName !== want) retag(titles[i], want.toLowerCase());
+    }
+  }
+
+  function paint(name, back, instantPill) {
+    var el = document.getElementById('p-' + name);
+    if (!el) return;
+
+    var pages = document.querySelectorAll('.page');
+    for (var i = 0; i < pages.length; i++) {
+      pages[i].classList.remove('enter', 'back');
+      if (pages[i] !== el) pages[i].hidden = true;
+    }
+    el.hidden = false;
+    syncHeadings(el);
+    void el.offsetWidth;                 // replay the entrance animation
+    el.classList.add('enter');
+    if (back) el.classList.add('back');
+
+    var links = tabs.querySelectorAll('a[data-p]');
+    for (var j = 0; j < links.length; j++) {
+      var on = links[j].getAttribute('data-p') === name;
+      links[j].classList.toggle('on', on);
+      if (on) { links[j].setAttribute('aria-current', 'page'); movePill(links[j], instantPill); }
+      else    { links[j].removeAttribute('aria-current'); }
+    }
+
+    document.title = TITLES[name] || TITLES.home;
+    window.scrollTo(0, 0);
+  }
+
+  /* A navigation that arrives mid-transition is queued, never dropped —
+     otherwise fast Back/Forward leaves the URL and the view out of step. */
+  function settle() {
+    var want = pending || pageFromHash();
+    pending = null;
+    if (want !== current) go(want);
+  }
+
+  function go(name) {
+    if (name === current) { pending = null; return; }
+    if (busy) { pending = name; return; }
+    var back = ORDER.indexOf(name) < ORDER.indexOf(current);
+
+    if (RM) { current = name; paint(name, back); settle(); return; }
+
+    busy = true;
+    rail.classList.remove('go'); void rail.offsetWidth; rail.classList.add('go');
+    curtain.classList.remove('open'); curtain.classList.add('close');
+
+    setTimeout(function () {
+      current = name;
+      paint(name, back);
+      curtain.classList.remove('close'); curtain.classList.add('open');
+      setTimeout(function () { busy = false; settle(); }, 400);
+    }, 400);
+  }
+
+  window.addEventListener('hashchange', function () { go(pageFromHash()); });
+
+  // clicking the tab you are already on shouldn't do anything
+  tabs.addEventListener('click', function (e) {
+    var a = e.target.closest ? e.target.closest('a[data-p]') : null;
+    if (a && a.getAttribute('data-p') === current) e.preventDefault();
+  });
+
+  /* ── gallery: pick a dish, the big photo swaps ──────────── */
+  var thumbs = document.getElementById('thumbs');
+  if (thumbs) {
+    thumbs.addEventListener('click', function (e) {
+      var b = e.target.closest ? e.target.closest('.thumb') : null;
+      if (!b) return;
+      var img = document.getElementById('galImg');
+      var cap = document.getElementById('galCap');
+      img.src = b.getAttribute('data-src');
+      img.alt = b.getAttribute('data-alt');
+      cap.textContent = b.getAttribute('data-name');
+      var all = thumbs.querySelectorAll('.thumb');
+      for (var i = 0; i < all.length; i++) all[i].removeAttribute('aria-current');
+      b.setAttribute('aria-current', 'true');
+    });
+  }
+
+  /* ── boot ───────────────────────────────────────────────── */
+  current = pageFromHash();
+  paint(current, false, true);
+
+  window.addEventListener('resize', function () {
+    movePill(tabs.querySelector('a.on'), true);
+  });
+  window.addEventListener('load', function () {
+    movePill(tabs.querySelector('a.on'), true);
+  });
+  if (document.fonts && document.fonts.ready) {
+    document.fonts.ready.then(function () { movePill(tabs.querySelector('a.on'), true); });
+  }
+})();
+</script>
+</body>
+</html>
